@@ -12,7 +12,7 @@ body {
 }
 
 .glitch {
-  animation: glitch-skew 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s infinite;
+  animation: glitch-skew 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2s infinite;
   font-family: orbitron, sans-serif;
   font-size: 8rem;
   font-weight: 900;
