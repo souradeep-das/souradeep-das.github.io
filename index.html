@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Portfolio</title>
-	<link rel="stylesheet" href="glitch.css">
-</head>
-<body>
-	<div class="glitch">
-	    <span class="gc gc-red">SOURADEEP DAS</span>
-	    <span class="gc gc-blue">SOURADEEP DAS</span>
-	    <span class="gc gc-green">SOURADEEP DAS</span>
-	    <span class="glitch__main">SOURADEEP DAS</span>
-	    <span class="gl gl-first"></span>
-	    <span class="gl gl-second"></span>
-	</div>
-</body>
-</html>
+<header class="header">
+	<h1 class="glitched">Glitch</h1>
+</header>
+<script>
+	$("header").append("<div class='glitch-window'></div>");
+
+$( "h1.glitched" ).clone().appendTo( ".glitch-window" );
+</script>
