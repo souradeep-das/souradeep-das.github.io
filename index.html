@@ -712,7 +712,7 @@
                     </p>
                 </div>
                
-                <form id="contact-form" class="contact-form"  method="POST">
+                <form id="contact-form" class="contact-form" action="send.php" method="POST">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -731,7 +731,7 @@
                         <label for="form-message">How may I help you?</label>
                         <textarea id="form-message" name="message" class="form-control contact-message" placeholder="Type message"></textarea>
                     </div>
-                    <button type="submit">Send message</button>
+                    <button type="submit" name="submit">Send message</button>
                     <span class="contact-submit-progress"></span>
                     <p class="contact-submit-message"></p>
                 </form>

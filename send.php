@@ -1,31 +1,37 @@
 <?php
-    if(isset($_POST['submit'])) {
-        require 'phpmailer/PHPMailerAutoload.php';
-        $mail = new PHPMailer;
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->Port =587;
-        $mail->SMTPAuth=true;
-        $mail->SMTPSecure='tls';
-    
-        $mail->Username='sqlscreenshot@gmail.com';
-        $mail->Password='tronisshit';
-    
-        $mail->setFrom($_POST['email'],$_POST['name']);
-        $mail->addAddress('dsouradeep2@gmail.com');
-        $mail->addReplyTo($_POST['email'],$_POST['name']);
-    
-        $mail->isHTML(true);
-        $mail->Subject = 'PHP Mailer Subject';
-        $mail->Body='<h1 align=center>Name:'.$_POST['name'].'</h1>';
-    
-        if(!$mail->send()){
-            echo "Message could not be sent!";
-        }
-        else {
-            echo "Message has been sent!";
-        }
-    }
-    
+    $msg = "";
+	use PHPMailer\PHPMailer\PHPMailer;
+	include_once "PHPMailer/PHPMailer.php";
+	include_once "PHPMailer/Exception.php";
+	include_once "PHPMailer/SMTP.php";
 
-    ?>
+	if (isset($_POST['submit'])) {
+		$email = $_POST['email'];
+		$message = $_POST['message'];
+
+		
+
+		$mail = new PHPMailer();
+
+		//if we want to send via SMTP
+		$mail->Host = "smtp.gmail.com";
+		//$mail->isSMTP();
+		$mail->SMTPAuth = true;
+		$mail->Username = "sqlscreenshot@gmail.com";
+		$mail->Password = "tronisshit";
+		$mail->SMTPSecure = "ssl"; //TLS
+		$mail->Port = 465; //587
+
+		$mail->addAddress('dsouradeep2@gmail.com');
+		$mail->setFrom($email);
+		$mail->isHTML(true);
+		$mail->Body = $message;
+
+		if ($mail->send())
+		    $msg = "Your email has been sent, thank you!";
+		else
+		    $msg = "Please try again!";
+
+		
+	}
+?>
