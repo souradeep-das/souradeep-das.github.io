@@ -1,46 +1,36 @@
 <?php
-    
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-	include_once "PHPMailer/PHPMailer.php";
-	include_once "PHPMailer/Exception.php";
-	include_once "PHPMailer/SMTP.php";
+   require 'vendor/autoload.php';
 
-    try {
-	if (isset($_POST['submit'])) {
-		$email = $_POST['email'];
-		$message = $_POST['message'];
+   $API_KEY = "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";
+   if(isset($_POST['submit']))
+   {
+	   $name = $_POST['name'];
+	   $email = $_POST['email'];
+	   $message = $_POST['message'];
 
-		
+	   $email = new \SendGrid\Mail\Mail(); 
+	   $email->setFrom("sqlscreenshot@gmail.com", "Example User");
+	   $email->setSubject("Sending with Twilio SendGrid is Fun");
+	   $email->addTo("dsouradeep2@gmail.com", "Example User");
+	   $email->addContent("text/plain", $message);
+	//    $email->addContent(
+	// 	   "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
+	//    );
+	   $sendgrid = new \SendGrid(getenv($API_KEY));
 
-		$mail = new PHPMailer(true);
+	   if($sendgrid->send($email))
+	   {
+		   echo "success";
+	   }
+	//    try {
+	// 	   $response = $sendgrid->send($email);
+	// 	   print $response->statusCode() . "\n";
+	// 	   print_r($response->headers());
+	// 	   print $response->body() . "\n";
+	//    } catch (Exception $e) {
+	// 	   echo 'Caught exception: '. $e->getMessage() ."\n";
+	//    }
+   }
+  
 
-		//if we want to send via SMTP
-		$mail->Host = "smtp.gmail.com";
-		//$mail->isSMTP();
-		$mail->SMTPAuth = true;
-		$mail->Username = "sqlscreenshot@gmail.com";
-		$mail->Password = "tronisshit";
-		$mail->SMTPSecure = "ssl"; //TLS
-		$mail->Port = 465; //587
-
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        ); 
-		$mail->addAddress('dsouradeep2@gmail.com');
-		$mail->setFrom($email);
-		$mail->isHTML(true);
-		$mail->Body = $message;
-
-		$mail->send();
-		    echo "Your email has been sent, thank you!";
-		
-    }
-} catch (Exception $e) {
-    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
-}
 ?>
