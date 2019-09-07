@@ -11,7 +11,7 @@
 
 		
 
-		$mail = new PHPMailer();
+		$mail = new PHPMailer(true);
 
 		//if we want to send via SMTP
 		$mail->Host = "smtp.gmail.com";
