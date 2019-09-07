@@ -712,7 +712,7 @@
                     </p>
                 </div>
                
-                <form id="contact-form" class="contact-form" action="https://formspree.io/dsouradeep2@gmail.com" method="POST">
+                <form id="contact-form" class="contact-form"  method="POST">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -794,6 +794,45 @@
         <script type="text/javascript" src="js/nicescroll.js"></script>
         <!-- custom js -->
         <script type="text/javascript" src="js/custom.js.pagespeed.jm.QgBoS9Xioy.js"></script>
+        <script>
+            $(document).ready(function() {
+
+	$('#contact-form').on('submit', function(e) {
+		e.preventDefault();
+		
+		//get the name field value
+		var name = $('#form-name').val();
+		//get the name field value
+		var email = $('#form-email').val();
+		//get the comments
+		var comments = $('#form-message').val();
+					
+		//pretend we don't need validation
+		
+		//send to formspree
+		$.ajax({
+			url:'https://formspree.io/dsouradeep2@gmail.com',
+			method:'POST',
+			data:{
+				name:name,
+				_replyto:email,
+				 email:email,
+				comments:comments,
+				_subject:'My Form Submission',
+			},
+			dataType:"json",
+			success:function() {
+				console.log('success');	
+				$('#formBlock').hide();
+				$('#thankyouBlock').show();
+			}	
+
+		});		
+		
+	});
+
+});	
+        </script>
         <style>
 
 #float{
