@@ -24,6 +24,13 @@
 		$mail->SMTPSecure = "ssl"; //TLS
 		$mail->Port = 465; //587
 
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        ); 
 		$mail->addAddress('dsouradeep2@gmail.com');
 		$mail->setFrom($email);
 		$mail->isHTML(true);
