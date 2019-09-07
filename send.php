@@ -1,10 +1,12 @@
 <?php
-    $msg = "";
-	use PHPMailer\PHPMailer\PHPMailer;
+    
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 	include_once "PHPMailer/PHPMailer.php";
 	include_once "PHPMailer/Exception.php";
 	include_once "PHPMailer/SMTP.php";
 
+    try {
 	if (isset($_POST['submit'])) {
 		$email = $_POST['email'];
 		$message = $_POST['message'];
@@ -27,11 +29,11 @@
 		$mail->isHTML(true);
 		$mail->Body = $message;
 
-		if ($mail->send())
-		    $msg = "Your email has been sent, thank you!";
-		else
-		    $msg = "Please try again!";
-
+		$mail->send();
+		    echo "Your email has been sent, thank you!";
 		
-	}
+    }
+} catch (Exception $e) {
+    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+}
 ?>
