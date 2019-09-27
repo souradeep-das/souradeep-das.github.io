@@ -86,6 +86,7 @@
                         <li><a href="#expertise">Interests and Skills</a></li>
                         <li><a href="#awards">Awards</a></li>
                         <li><a href="#portfolio">Projects</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>		
@@ -701,12 +702,26 @@
             </div>
         </section> -->
         <!--==========End blog-two-area========-->
-        
+        <section class="contact-two-area dk-bg-light" id="gallery">
+                <div class="container">
+                <div class="sec-title3 sec-right dk-color">
+                        <h2 data-line="07">Show-Off</h2>
+        <div class="container1" id="container">
+                <ul>
+                    <li class="active"><img src="image/1.png" alt="" /></li>
+                    <li><img src="image/2.png" alt="" /></li>
+                    <li><img src="image/3.png" alt="" /></li>
+                    <li><img src="image/4.png" alt="" /></li>
+                    <li><img src="image/5.png" alt="" /></li>
+                    <li><img src="image/6.png" alt="" /></li>
+                </ul>
+        </div>
+    </section>
         <!--==========start contact-two-area ========-->
         <section class="contact-two-area dk-bg-light" id="contact">
             <div class="container">
                 <div class="sec-title3 sec-left dk-color">
-                    <h2 data-line="07">Contact</h2>
+                    <h2 data-line="08">Contact</h2>
                     <p>Working on Something Interesting and Need a Hand?<br>
                         Well, I have two!
                     </p>
@@ -872,8 +887,113 @@
   left:100%;
   opacity:0;
 }
+
+.container1
+{
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden;
+}
+
+.container1 span
+{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: absolute;
+}
+
+.container1 ul, .container1 li
+{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.container1 li
+{
+	display: none;
+}
+
+.container1 li.active
+{
+	display: inline;
+}
       </style>
     </body>
 
-<!-- Mirrored from droitlab.com/html/smith/v1/main/index-3-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Sep 2019 05:42:01 GMT -->
+    <script>
+            $(document).ready(function(){
+          var width = 960;
+            height = 538;
+            var numberOfBlinds = 20;
+            var margin = 2;
+            var color = '#2b2c2c';
+          gapHeight = 100;
+        
+            var container = $('#container');
+        
+            container.width(width).height(height);
+            var blindWidth = width / numberOfBlinds;
+        
+          images = new Array();
+            $('ul li', container).each(function() {
+            images.push($(this)); 
+          });
+        
+          images[0].addClass('active');
+          activeImage = 0;
+        
+          for (var i = 0; i < numberOfBlinds; i++) {
+            var tempEl = $(document.createElement('span'));
+            var borders = calculateBorders();
+        
+            tempEl.css({
+              'left': i * blindWidth,
+              border: margin + 'px solid ' + color,
+              borderTop: borders.borderWidthTop + 'px solid ' + color,
+              borderBottom: borders.borderWidthBottom + 'px solid ' + color,
+              'height': height,
+              'width': blindWidth
+            });
+                        
+            container.prepend(tempEl);
+          };
+        
+          blinds = $('span', container);
+          setTimeout(animateBorders, 1000);
+        });
+        
+        function calculateBorders() {
+          var random = Math.floor((Math.random()*9)+1);
+          var borderWidthTop = (random / 10) * gapHeight;
+          var borderWidthBottom = gapHeight - borderWidthTop;
+        
+          return {borderWidthTop: borderWidthTop, borderWidthBottom: borderWidthBottom};
+        }
+        
+        function animateBorders() {
+          var changeOccuredOnce = false;
+        
+          blinds.animate({
+            borderTopWidth: height / 2,
+            borderBottomWidth: height / 2
+          }, 1000, function() {
+            if(!changeOccuredOnce) {
+              images[activeImage].removeClass('active');
+              activeImage = (activeImage + 1) % images.length;
+              images[activeImage].addClass('active');
+              setTimeout(animateBorders, 3000);
+              changeOccuredOnce = true;
+            }
+        
+            var borders = calculateBorders();
+        
+            $(this).delay(300).animate({
+              borderTopWidth: borders.borderWidthTop,
+              borderBottomWidth: borders.borderWidthBottom
+            }, 1000);
+          });
+        }
+        </script>
 </html>
