@@ -1519,72 +1519,56 @@ article .content .caption {
   content: ")";
 }
 .highlight {
-  color: #333;
-  background: #f8f8f8;
+  color: #444;
+  background: #f0f0f0;
 }
-.highlight .code .comment,
-.highlight .code .quote {
-  color: #998;
-  font-style: italic;
+.highlight .code .subst {
+  color: #444;
 }
 .highlight .code .keyword,
+.highlight .code .attribute,
 .highlight .code .selector-tag,
-.highlight .code .subst {
-  color: #333;
+.highlight .code .meta-keyword,
+.highlight .code .doctag,
+.highlight .code .name {
   font-weight: bold;
-}
-.highlight .code .number,
-.highlight .code .literal,
-.highlight .code .variable,
-.highlight .code .template-variable,
-.highlight .code .tag .attr {
-  color: #008080;
-}
-.highlight .code .string,
-.highlight .code .doctag {
-  color: #d14;
-}
-.highlight .code .title,
-.highlight .code .section,
-.highlight .code .selector-id {
-  color: #900;
-  font-weight: bold;
-}
-.highlight .code .subst {
-  font-weight: normal;
-}
-.highlight .code .type,
-.highlight .code .class .title {
-  color: #458;
-  font-weight: bold;
-}
-.highlight .code .tag,
-.highlight .code .name,
-.highlight .code .attribute {
-  color: #000080;
-  font-weight: normal;
-}
-.highlight .code .regexp,
-.highlight .code .link {
-  color: #009926;
-}
-.highlight .code .symbol,
-.highlight .code .bullet {
-  color: #990073;
 }
 .highlight .code .built_in,
-.highlight .code .builtin-name {
-  color: #0086b3;
+.highlight .code .literal,
+.highlight .code .bullet,
+.highlight .code .code,
+.highlight .code .addition {
+  color: #1f811f;
 }
-.highlight .code .meta {
-  color: #999;
+.highlight .code .regexp,
+.highlight .code .symbol,
+.highlight .code .variable,
+.highlight .code .template-variable,
+.highlight .code .link,
+.highlight .code .selector-attr,
+.highlight .code .selector-pseudo {
+  color: #bc6060;
+}
+.highlight .code .type,
+.highlight .code .string,
+.highlight .code .number,
+.highlight .code .selector-id,
+.highlight .code .selector-class,
+.highlight .code .quote,
+.highlight .code .template-tag,
+.highlight .code .deletion {
+  color: #800;
+}
+.highlight .code .title,
+.highlight .code .section {
+  color: #800;
   font-weight: bold;
 }
-.highlight .code .deletion {
-  background: #fdd;
+.highlight .code .comment {
+  color: #888;
 }
-.highlight .code .addition {
-  background: #dfd;
+.highlight .code .meta {
+  color: #2b6ea1;
 }
 .highlight .code .emphasis {
   font-style: italic;

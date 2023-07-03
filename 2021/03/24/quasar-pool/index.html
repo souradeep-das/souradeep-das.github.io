@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/26090752/104730186-9815b080-575f-11eb-8061-5fbe84a9e1ed.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/26090752/104730202-9d72fb00-575f-11eb-8302-f11ccfe89b96.png">
 <meta property="article:published_time" content="2021-03-23T22:26:47.000Z">
-<meta property="article:modified_time" content="2023-06-25T09:18:41.912Z">
+<meta property="article:modified_time" content="2023-06-30T05:46:42.000Z">
 <meta property="article:author" content="Souradeep Das">
 <meta property="article:tag" content="Research">
 <meta property="article:tag" content="Layer 2">
@@ -51,6 +51,14 @@
     
     <!-- async scripts -->
     <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
 
 
     <!-- Umami Analytics -->
@@ -216,29 +224,29 @@
     <!-- ## Quasar Pool Design -->
 
 <p>Find more details about the Quasar and its construction: <a href="/2021/01/18/quasar/" title="Quasar Fast Withdrawals: Instant Trustless Exits on Plasma">here</a><br>which explains a fully trustless model for enabling fast exits in Plasma (or an equivalent L2 without smart contracts) </p>
-<p>This is a continuation that explains the choices we made for the first implementation, trading off a bit on the trustless side for easier UX&#x2F;usability.</p>
+<p>This is a continuation that explains a variation in the construction of the quasar, trading off a bit on the trustless side for easier UX&#x2F;usability. (specifically this is the first implementation used by OmiseGo,)</p>
 <p><em><strong>Note:</strong> the Quasar pool mentioned here is a plug-in to pool-in liquidity from several lenders and make things easy for someone running a Quasar contract. It is not an inherent requirement and the most ideal trustless Quasar should have funds pooled in only by the Quasar Owner.</em></p>
 <h2 id="The-inception-of-a-Quasar-pool"><a href="#The-inception-of-a-Quasar-pool" class="headerlink" title="The inception of a Quasar pool:"></a>The inception of a Quasar pool:</h2><p>This is what a trustless Quasar should look like (this just shows the flows of the funds, some steps about Quasar interaction eg: ticket, challenges, ifeClaims haven’t been shown) <br><br><br><img src="https://user-images.githubusercontent.com/26090752/112024138-e5484100-8b59-11eb-979d-2d72e08c6c93.jpg" alt="quasar_diagram_without external_pool"></p>
-<p>Here, the Quasar operator would put in funds on the ETH pool, and steps marked # are optional, the Quasar owner can do whatever they want with the funds received on plasma after step 1. </p>
+<p>Here, the Quasar operator would put in funds on the ETH pool, and steps marked in ‘#’ are optional, the Quasar owner can do anything they want with the funds received on plasma after step 1. </p>
 <p><em>Why should an ideal trustless Quasar have funds pooled in only by the Quasar operator?</em></p>
-<p>A trustless Quasar shouldn’t need to trust anybody including the plasma operator. If you don’t trust the plasma operator, you are saying you may accept the validity of the tx inclusion proof (from step 2 of the above diagram). In that case you have a challenge period and prove any false claim wrong (after step 2). So, ideally you should have your own funds at stake and challenge whenever there is a need to protect your funds.</p>
+<p>A trustless Quasar shouldn’t need to trust anybody including the plasma operator. If you don’t trust the plasma operator, you are essentially contesting the validity of the tx inclusion proof (from step 2 of the above diagram). In that case you have a challenge period and prove any false claim wrong (after step 2). So, ideally since you are in control, you should have your own funds at stake, such that whenever there is a need, you actively challenge to protect your funds.</p>
 <p>Now also note that the need for a challenge would only come up in case there is a invalid inclusion proof (in other words when the child chain is byzantine - a mass exit scenario)</p>
-<p>In this implementation the plasma operator is also running the Quasar - we trust ourselves and hence we have an opportunity to remove the challenge period!</p>
+<p>If in an implementation the plasma operator is also running a Quasar - they trust themselves and hence have an opportunity to remove the challenge period from the Quasar!</p>
 <p>This brings us to:</p>
-<h2 id="Change-1-Quasar-with-no-challenge-period"><a href="#Change-1-Quasar-with-no-challenge-period" class="headerlink" title="Change 1. Quasar with no challenge period"></a>Change 1. Quasar with no challenge period</h2><p>So we have - a plasma operator that trusts himself that he won’t go byzantine and hence, pools in funds on the Quasar.</p>
-<p>Now, we thought we should have people collectively pool-in funds for the Quasar pool, instead - which brings in participants to stay engaged with the pool and profits, and mostly to avoid putting up a large sum on the pool ourselves. </p>
-<p>So the trust model change gradually from -</p>
+<h2 id="Change-1-Quasar-with-no-challenge-period"><a href="#Change-1-Quasar-with-no-challenge-period" class="headerlink" title="Change 1. Quasar with no challenge period"></a>Change 1. Quasar with no challenge period</h2><p>So we have - a plasma operator that trusts themselves, that they won’t go byzantine and hence, pools in funds on the Quasar.</p>
+<p>Now, this can be expanded to have people collectively pool-in funds for the Quasar pool, instead - which brings in participants to stay engaged with the pool and profits, and mostly to avoid putting up a large sum on the pool by the operator themselves. </p>
+<p>So the trust model changes gradually from -</p>
 <p><strong>Initially:</strong> Nobody trusts anybody.</p>
-<p><strong>With no challenge period:</strong> plasma operator -&gt; plasma operator</p>
+<p><strong>With no challenge period:</strong> plasma operator trusts -&gt; plasma operator</p>
 <p><strong>With multiple suppliers pool:</strong> There are 2 choices:</p>
 <ul>
 <li><em>A) With collateral by operator:</em><br>   plasma operator trust -&gt; plasma operator</li>
 <li><em>B) Without collateral by operator:</em><br>    Lenders trust -&gt; plasma operator</li>
 </ul>
-<p>We went with option B) </p>
+<p>In this variation we will assume and go with B)</p>
 <p>This brings us to:</p>
 <h2 id="Change-2-Quasar-pool-with-multiple-suppliers"><a href="#Change-2-Quasar-pool-with-multiple-suppliers" class="headerlink" title="Change 2. Quasar pool with multiple suppliers"></a>Change 2. Quasar pool with multiple suppliers</h2><p>The structure now looks like this <br><br><br><img src="https://user-images.githubusercontent.com/26090752/112024174-ee391280-8b59-11eb-8406-fa7d7d460e98.jpg" alt="quasar_diagram_with external_pool"></p>
-<p>We tried to make it look similar to Compound (think the Quasar contract is the compound supply pool). The borrowers are the exiters, but the one who repays is us (the trusted plasma operator).</p>
+<p>We can try and make it look similar to Compound (think the Quasar contract is the compound supply pool). The borrowers are the exiters, but the one who repays is - the trusted plasma operator.</p>
 <p>Compound generates returns on the basis of block time. We do it on the basis of the number of exits. </p>
 <h2 id="Returns-calculation"><a href="#Returns-calculation" class="headerlink" title="Returns calculation:"></a>Returns calculation:</h2><p>Every output you send to the Quasar owner on Plasma, you can withdraw<br><code>output_val - quasar_fee</code><br>from the Quasar contract on Ethereum. </p>
 <p>This <code>quasar_fee</code> margin will be distributed among the pool of lenders in the ratio of each lender’s stake.<br>The calculation, we do it in a very similar way to a defi lending protocol, using qTokens.</p>
@@ -264,7 +272,7 @@ https://github.com/omgnetwork/brainstorm/tree/main/quasarPool_returns -->
 <p>If there are many lenders to the pool, the fee per qToken would be less<br>If there are small no of lenders, the fee per qToken is more.</p>
 <p>We want the number of qToken in the pool to adjust automatically according to their return requirements.</p>
 <p>When people supply, more qTokens.<br>when people withdraw, less qTokens in supply</p>
-<h3 id="Returns-Per-Week"><a href="#Returns-Per-Week" class="headerlink" title="Returns Per Week"></a>Returns Per Week</h3><p>This gives a better idea of the movement in the pool as this brings the number of exits into the equation.<br>Also, a thing to note is the returns are compounded.</p>
+<h3 id="Returns-Per-Week"><a href="#Returns-Per-Week" class="headerlink" title="Returns Per Week"></a>Returns Per Week</h3><p>This gives a better idea of the movement in the pool as this brings the number of exits into the equation.<br>Also, a thing to note is that the returns are compounded.</p>
 <p><code>Returns per week = (quasar_fee per exit * no of exits in the week * no of your qTokens) / qToken total supply  </code></p>
 <p>This means the returns will increase&#x2F;decrease with the increase&#x2F;decrease in the number of exits</p>
 <h3 id="Scenario-1"><a href="#Scenario-1" class="headerlink" title="Scenario 1"></a>Scenario 1</h3><p>When the number of exits increases, pool supply is idle:</p>
@@ -278,7 +286,7 @@ https://github.com/omgnetwork/brainstorm/tree/main/quasarPool_returns -->
 <p>This makes it a self-regulating pool, in terms of the need or use of fast exits in the system.</p>
 <p><strong>The idea is that a higher number of fast exits would need a higher liquidity pool size, and scenario 1 shows that this will incentivize people to supply more</strong></p>
 <p><strong>Similarly if there aren’t enough fast exit happening, we are better off with a small pool size(since that would be enough liquidity for a smaller number of exits)</strong></p>
-<p>This sums up the tweaks we made on the Quasar, apart from another minor tweak in the auto determination of a safe-block-num (which you can find in the first doc).</p>
+<p>This sums up the tweaks for the construction, and if you are wondering - yes, this was the first iteration and has been implemented in code. <a target="_blank" rel="noopener" href="https://github.com/omgnetwork/plasma-contracts/tree/master/plasma_framework/contracts/quasar">Find more about the implementation here</a>.</p>
 
   </div>
 </article>

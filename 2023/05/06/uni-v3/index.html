@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i.imgur.com/rXjX3wa.jpg">
 <meta property="article:published_time" content="2023-05-06T12:40:32.000Z">
-<meta property="article:modified_time" content="2023-06-25T12:31:34.466Z">
+<meta property="article:modified_time" content="2023-06-30T05:58:06.000Z">
 <meta property="article:author" content="Souradeep Das">
 <meta property="article:tag" content="Rollup">
 <meta property="article:tag" content="Layer 2">
@@ -46,6 +46,14 @@
     
     <!-- async scripts -->
     <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
 
 
     <!-- Umami Analytics -->
@@ -208,7 +216,7 @@
   <div class="content e-content" itemprop="articleBody">
     <!-- # **Deploying Uniswap V3:** <br>*A developers guide to Navigating the Complexities* -->
 
-<p>After much thoughtful contemplation, the diligent unicorn has finally decided to reach for newer pastures. All of this, of-course, happened with the passing of proposal <a target="_blank" rel="noopener" href="https://gov.uniswap.org/t/deploy-uniswap-v3-to-boba-network/18018">#18018</a>, the community has now decided to launch Uniswap V3 to the Boba Network L2 on Ethereum!</p>
+<p>After much thoughtful contemplation, the diligent unicorn has finally decided to reach for newer pastures. All of this, of-course, happened with the passing of proposal <a target="_blank" rel="noopener" href="https://gov.uniswap.org/t/deploy-uniswap-v3-to-boba-network/18018">#18018</a>, the community has now decided to launch Uniswap V3 to the Boba Network L2 on Ethereum! As of the current stance, the Uniswap community has been actively voting to deploy V3 on several other chains too, and with the license expiry this April- we may expect several other V3 forks to come up soon.</p>
 <p>The primary step to Deploying Uniswap V3 (or for that matter a clone) is to deploy the smart contracts that make up this amazing V3 protocol, and that’s exactly what we will be covering in this article. </p>
 <p>Before we begin, the Uniswap team deserves a huge shout out for assimilating all the associated content in an organized unified location.<br><a target="_blank" rel="noopener" href="https://github.com/Uniswap/v3-new-chain-deployments">V3 new chain repo</a><br><a target="_blank" rel="noopener" href="https://github.com/Uniswap/deploy-v3">V3 deploy repo</a></p>
 <p>These repositories serve their purpose very well and we(and you) will be using these throughout the article. However, despite their best efforts (and at no fault of theirs), the deployment process might include several intricacies, primarily associated with carrying out the steps on a chain other than Ethereum. While it is not possible, and probably unfair to ask to list out all these intricacies or extra details, this article stands to serve the exact purpose and complement the repos by filling in as many information gaps to make your deployment experience a breeze!</p>
@@ -367,8 +375,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge verify-contract 0xF80c91442D3EF66632958C0d395667075FC82fB0 src/Permit2.sol:Permit2 --verifier-url https://api.bobascan.com/api --compiler-version &quot;v0.8.17+commit.8df45f5f&quot; --optimizer-runs 1000000 --chain-id 288 --watch</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
-<p>Congratulations! With all of that done, you now have a deployed set of Uniswap V3 contracts at your disposal, plus a universal router to go with it, in case you need one.</p>
-<p>One more thing? No!<br>You may now proceed to sip on that well deserved Boba you’ve been longing for!<br>Goodbye for now ;)</p>
+<p>Congratulations! With all of that done, you now have a deployed set of Uniswap V3 contracts at your disposal, plus a universal router to go with it, in case you need one.<br>Cheers, and Goodbye for now!</p>
 <p><img src="https://i.imgur.com/rXjX3wa.jpg"></p>
 
   </div>

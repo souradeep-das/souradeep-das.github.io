@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="This is an approach to have a separate Vault + Exit Game with lower exit period which acts as an extension to the existing network. The main idea however, could be to have several of these Vaults th">
+    <meta name="description" content="Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VIP Vault (or) Multiple Exit Vaults for Plasma">
 <meta property="og:url" content="http://example.com/2020/10/15/vip-exit-vault/index.html">
 <meta property="og:site_name" content="Souradeep is typing...">
-<meta property="og:description" content="This is an approach to have a separate Vault + Exit Game with lower exit period which acts as an extension to the existing network. The main idea however, could be to have several of these Vaults th">
+<meta property="og:description" content="Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All t">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-14T18:41:09.000Z">
-<meta property="article:modified_time" content="2023-06-25T09:25:35.818Z">
+<meta property="article:modified_time" content="2023-06-30T06:21:12.000Z">
 <meta property="article:author" content="Souradeep Das">
 <meta property="article:tag" content="Research">
 <meta property="article:tag" content="Layer 2">
@@ -44,6 +44,14 @@
     
     <!-- async scripts -->
     <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
 
 
     <!-- Umami Analytics -->
@@ -119,7 +127,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure"><span class="toc-number">1.</span> <span class="toc-text">Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limiting-Access"><span class="toc-number">2.</span> <span class="toc-text">Limiting Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce-Exit-Period"><span class="toc-number">3.</span> <span class="toc-text">Reduce Exit Period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discarded-Ideas"><span class="toc-number">4.</span> <span class="toc-text">Discarded Ideas</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-proposal"><span class="toc-number">1.</span> <span class="toc-text">The proposal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure"><span class="toc-number">2.</span> <span class="toc-text">Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limiting-Access"><span class="toc-number">3.</span> <span class="toc-text">Limiting Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce-Exit-Period"><span class="toc-number">4.</span> <span class="toc-text">Reduce Exit Period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discarded-Ideas"><span class="toc-number">5.</span> <span class="toc-text">Discarded Ideas</span></a></li></ol>
       </div>
     
   </span>
@@ -165,7 +173,7 @@
 
       <span class="reading-time">
       <i class="fa-regular fa-clock"></i>
-      5 minute read
+      7 minute read
       </span>
       
 
@@ -204,8 +212,11 @@
 
   <div class="content e-content" itemprop="articleBody">
     <!-- # VIP Vault (or) Multiple Exit Vaults -->
-
-<p>This is an approach to have a separate Vault + Exit Game with lower exit period which acts as an extension to the existing network. The main idea however, could be to have several of these Vaults that enable the possibility of having assets(utxo) which are exitable at different exit periods.</p>
+<p>Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All transactions on the chch are secured as per the consensus of the underlying layer - Ethereum, and a unique Exit Game design construct ensures funds are always protected from any third party-intervention or manipulation by the chch operator. </p>
+<p>Part of this exit game design is the crucial component - “withdrawal period”. When users wish to withdraw funds from the Plasma chch, they initiate an exit process, wherein the process includes a time-based challenge period, set to 7 days. During this period, other participants of the network can challenge the validity of the exits by submitting a proof. If no challenges are raised within the timeframe, the exit is considered valid, allowing funds to be safely transferred back to the Ethereum mainnet. Hence, the withdrawal period of 7 days enables to protect the integrity of the L2 by disallowing any faulty withdrawals, with the assumption that 7 days is enough time for a fellow participant to react and submit a proof.</p>
+<p>While the 7 day withdrawal period is of the utmost necessity, the same can be perceived as a potential limitation for users who want quick access to funds. That a user would wait 7 days for obtaining their funds when they move from L2&gt;L1 is an unrealistic expecation, and so, a solution in this regard is of the highest order to make Layer2’s synonymous with the ecosystem.</p>
+<p>The following article is a proposal to solve the withdrawal problem, or propose a fast withdrawal method. This proposal has been written in the context of the MoreVp implementation of Plasma (OmiseGo), but can be freely applied to any other implentation or even a L2 with similar attributes.</p>
+<h2 id="The-proposal"><a href="#The-proposal" class="headerlink" title="The proposal"></a>The proposal</h2><p>This is an approach to have a separate Vault + Exit Game with lower exit period which acts as an extension to the existing network. The main idea however, could be to have several of these Vaults that enable the possibility of having assets(utxo) which are exitable at different exit periods.</p>
 <p>The main objectives of the VIP Vault are-</p>
 <ul>
 <li>Reduce Exit Period</li>
@@ -225,7 +236,7 @@
 </ol>
 <p>Potential ways to reduce number of UTXOs-</p>
 <ol>
-<li><p>Have a lower bound on the deposit amount to the vault. this would only allow certain VIP rollers to access the vault and get their fast-exitable outputs. But the UTXOs can still be broken to several other UTXOs, while it is a good method to limit access, there is still possibility of having UTXOs cross the limit</p>
+<li><p>Have a lower bound on the deposit amount to the vault. this would only allow certain VIP rollers to access the vault and get their fast-exitable outputs. But the UTXOs can still be broken to several other UTXOs, while this is a good method to limit access, there is still possibility of having UTXOs cross the limit</p>
 </li>
 <li><p>Have a lower bound on the size of UTXO for the vault. The outputs from the Tx should each be higher than the minimum value. For example, if the lower bound is 5 ETH, an output of size 50 ETH can maximally be split into 10 UTXOs and no further.</p>
 </li>
@@ -272,7 +283,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure"><span class="toc-number">1.</span> <span class="toc-text">Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limiting-Access"><span class="toc-number">2.</span> <span class="toc-text">Limiting Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce-Exit-Period"><span class="toc-number">3.</span> <span class="toc-text">Reduce Exit Period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discarded-Ideas"><span class="toc-number">4.</span> <span class="toc-text">Discarded Ideas</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-proposal"><span class="toc-number">1.</span> <span class="toc-text">The proposal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure"><span class="toc-number">2.</span> <span class="toc-text">Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limiting-Access"><span class="toc-number">3.</span> <span class="toc-text">Limiting Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce-Exit-Period"><span class="toc-number">4.</span> <span class="toc-text">Reduce Exit Period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discarded-Ideas"><span class="toc-number">5.</span> <span class="toc-text">Discarded Ideas</span></a></li></ol>
       </div>
     
 
