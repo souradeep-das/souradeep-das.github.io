@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="AbstractStablecoins, which are primarily intended to function as a global reserve of value is insubstantial in their design and present many failure points. The mechanism to enable the coins to hold">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Incentivized Third Party Collateralization for Stablecoins">
+<meta property="og:url" content="https://souradeep-das.github.io/2020/04/21/stablecoin/index.html">
+<meta property="og:site_name" content="Souradeep is typing...">
+<meta property="og:description" content="AbstractStablecoins, which are primarily intended to function as a global reserve of value is insubstantial in their design and present many failure points. The mechanism to enable the coins to hold">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://souradeep-das.github.io/images/stablecoin_1.png">
+<meta property="og:image" content="https://souradeep-das.github.io/images/stablecoin_2.png">
+<meta property="og:image" content="https://souradeep-das.github.io/images/stablecoin_3.png">
+<meta property="article:published_time" content="2020-04-21T04:27:00.000Z">
+<meta property="article:modified_time" content="2023-06-29T08:45:54.000Z">
+<meta property="article:author" content="Souradeep Das">
+<meta property="article:tag" content="Research">
+<meta property="article:tag" content="Defi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://souradeep-das.github.io/images/stablecoin_1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon4.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192_4.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon4.png">
+        
+      
+    
+    <!-- title -->
+    
+      <title>Souradeep's Blog: Incentivized Third Party Collateralization for Stablecoins</title>
+    
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/10/15/vip-exit-vault/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2020/04/21/stablecoin/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&text=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&is_video=false&description=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Incentivized Third Party Collateralization for Stablecoins&body=Check out this article: https://souradeep-das.github.io/2020/04/21/stablecoin/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&name=Incentivized Third Party Collateralization for Stablecoins&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2020/04/21/stablecoin/&t=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-State-of-Existing-Problems"><span class="toc-number">3.</span> <span class="toc-text">2. State of Existing Problems</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Artificial-Markets"><span class="toc-number">3.1.</span> <span class="toc-text">A.  Artificial Markets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Market-Manipulation"><span class="toc-number">3.2.</span> <span class="toc-text">B.  Market Manipulation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-An-Update-to-the-Architecture"><span class="toc-number">4.</span> <span class="toc-text">3. An Update to the Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-The-process"><span class="toc-number">4.1.</span> <span class="toc-text">A.  The process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Incentives-for-Investment"><span class="toc-number">4.2.</span> <span class="toc-text">B.  Incentives for Investment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-External-Collateral-provision-from-the-Pool"><span class="toc-number">4.3.</span> <span class="toc-text">C.  External Collateral provision from the Pool</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Explaining-competition"><span class="toc-number">5.</span> <span class="toc-text">4. Explaining competition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Anonymity-to-enforce-competition"><span class="toc-number">5.1.</span> <span class="toc-text">A.  Anonymity to enforce competition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Risk-x2F-Reward-Gains"><span class="toc-number">5.2.</span> <span class="toc-text">B.  Risk&#x2F;Reward Gains</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-Keeping-the-system-alive"><span class="toc-number">5.3.</span> <span class="toc-text">C.  Keeping the system alive</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Explaining-the-Money-Money-Algorithm"><span class="toc-number">6.</span> <span class="toc-text">5. Explaining the Money-Money Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Designing-the-algorithm"><span class="toc-number">6.1.</span> <span class="toc-text">A.  Designing the algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Description-of-the-design"><span class="toc-number">6.2.</span> <span class="toc-text">B.  Description of the design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-Optimal-Strategy"><span class="toc-number">6.3.</span> <span class="toc-text">C.  Optimal Strategy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Statistics"><span class="toc-number">7.</span> <span class="toc-text">6. Statistics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Additional-Integrations"><span class="toc-number">8.</span> <span class="toc-text">7. Additional Integrations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Introduction-of-a-Secondary-token"><span class="toc-number">8.1.</span> <span class="toc-text">A.  Introduction of a Secondary token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Adding-a-lending-service-to-integrate-with-the-ecosystem"><span class="toc-number">8.2.</span> <span class="toc-text">B.  Adding a lending service to integrate with the ecosystem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Implementation-Discussion"><span class="toc-number">9.</span> <span class="toc-text">8. Implementation Discussion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusion"><span class="toc-number">10.</span> <span class="toc-text">9. Conclusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-References"><span class="toc-number">11.</span> <span class="toc-text">10. References</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    <!-- 
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Incentivized Third Party Collateralization for Stablecoins
+    </h1>
+
+
+ -->
+    <!-- just remove the below if not needed -->
+    
+    
+    
+    
+    
+    <h1 class="posttitle">
+      Incentivized Third Party Collateralization for Stablecoins
+      
+    </h1>
+    
+    
+
+    <div class="meta">
+      <!-- <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Souradeep Das</span>
+      </span> -->
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-21T04:27:00.000Z" class="dt-published" itemprop="datePublished">2020-04-21</time>
+        
+      
+    </div>
+
+
+      <span class="reading-time">
+      <i class="fa-regular fa-clock"></i>
+      15 minute read
+      </span>
+      
+
+      <!-- 
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Defi/" rel="tag">Defi</a>, <a class="p-category" href="/tags/Research/" rel="tag">Research</a>
+    </div>
+ -->
+
+
+    <div class="article-tag">
+      <i class="fa-solid fa-tag"></i>
+      
+        <a href="/tags/Research/">#Research</a>
+        
+          ,
+        
+      
+        <a href="/tags/Defi/">#Defi</a>
+        
+      
+    </div>
+  
+  
+  
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <!-- # Incentivized Third Party Collateralization for Stablecoins -->
+
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a><em>Abstract</em></h2><p><strong>Stablecoins, which are primarily intended to function as a global reserve of value is insubstantial in their design and present many failure points. The mechanism to enable the coins to hold on-to a fixed value is by backing it with a collateral. Fiat collateralized stablecoins requires the users to trust a centralized entity, which breaks the total concept of decentralization. Crypto collateralized stablecoins has issues revolving high collateral requirements and risks of auto-liquidation. This Research Project aims to propose the use of an alternative architecture for the creation of a functional and secure stablecoin.</strong></p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>Stablecoins are crypto tokens designed to eliminate volatility by backing it with an asset or fiat currency that remains stable. Further simplifying on the context - A stablecoin is just a token on the blockchain which maintains its value in accordance to a fiat government backed currency. Due to their property of non-volatility, which has been a pre-dominant problem in cryptocurrencies that exist today, it has garnered a lot of interest and appreciation.</p>
+<p>However, Stablecoin designs which exist currently are insubstantial and present many failure points, which limits their general acceptability. Fiat collateralized stablecoins require users to trust a central entity, which breaks the total concept of decentralization. Non-collateralized stablecoins implementing seigniorage shares approach are still new and people actually trusting on them is questionable. Slightly better off the Crypto-Collateralized stablecoins, though providing a decentralized ecosystem are not that efficient in maintaining the stability and moreover has issues revolving high collateral requirements and liquidation risk in market crashes. Crypto-backed stablecoins like Dai, from Maker has achieved the feat of decentralization in the system [1], but has instability in their design principles –</p>
+<p>• ~1.5 x collateral required</p>
+<p>• Collateral can be auto liquidated</p>
+<p>Summing up, all-together there is a dire need and opportunity to improve this piece of technology for global reach and acceptance.</p>
+<h2 id="2-State-of-Existing-Problems"><a href="#2-State-of-Existing-Problems" class="headerlink" title="2. State of Existing Problems"></a>2. State of Existing Problems</h2><h3 id="A-Artificial-Markets"><a href="#A-Artificial-Markets" class="headerlink" title="A.  Artificial Markets"></a>A.  <strong>Artificial Markets</strong></h3><p>The market is dependent on supply-demand relationships. As most of the underlying cryptocurrencies are based on supply-demand relationships, proof of work provides the intended way to mine and produce new coins in the market. The difficulty of the system is adjusted and the target is set in every iteration to generate new coins. The target and reward re-adjustments provide an optimum way to attain stability. Artificial market calls for a solution which could hide the market problems by separating the concerns in token-economics [2].</p>
+<h3 id="B-Market-Manipulation"><a href="#B-Market-Manipulation" class="headerlink" title="B.  Market Manipulation"></a>B.  <strong>Market Manipulation</strong></h3><p>Market manipulation allows for any entity to attempt to try and manipulate the market to alter the price of the stablecoins. Furthermore, the existential risk of market collapse also destroys the whole concept of a decentralized cryptocurrency. Controlling or influencing markets can be a cause to destroying the functionality of the whole ecosystem. Manipulating the markets will result in an improper game to play and will take the market down instantly. Summing up the weakness can be divide into two kinds of risk–</p>
+<p>1. Risk of market collapse,</p>
+<p>2. Oracle&#x2F;governance manipulation.</p>
+<h2 id="3-An-Update-to-the-Architecture"><a href="#3-An-Update-to-the-Architecture" class="headerlink" title="3. An Update to the Architecture"></a>3. An Update to the Architecture</h2><p>The existing problems redirect to a new form of backing the architecture of stablecoins and one way of attaining all the benefits while solving all the problems is by creating collateral backing from third party investments. Broadly speaking, crypto-collateralized stablecoin where the collateral backing is from third party investments would allow a 1:1 collateralization ratio, and while also allowing to use the investor’s funds as a security if&#x2F;when the price of Ethereum goes down. The stability and the operation of the system is taken care of by the competitive investment process.</p>
+<h3 id="A-The-process"><a href="#A-The-process" class="headerlink" title="A.  The process"></a>A.  <strong>The process</strong></h3><p>Users deposit ethers and get an equivalent amount of stablecoins for the collateral provided. Unlike Maker and other crypto backed stablecoins, no extra amount of ether has to be provided by the person. After the stablecoins are exchanged for the collateral amount, the coins and amount need to be secured by someone&#x2F; a group of people (crowdfunding) for volatility in the underlying crypto (Ethereum). The volatility is taken care of by the investment circle running in the background. The group of people who secured the stablecoin are entitled for the profit or loss (if any) in the underlying crypto and helps keep the stablecoins stable.</p>
+<h3 id="B-Incentives-for-Investment"><a href="#B-Incentives-for-Investment" class="headerlink" title="B.  Incentives for Investment"></a>B.  <strong>Incentives for Investment</strong></h3><p>The algorithm provides better returns to the investors for providing a part of the collateral, than just holding on to their Ethereum (ETH)[3] The investment made by people is returned when the original stablecoins are redeemed. The amount returned to each of the investors is not linear to the fraction they provided the collateral for, but exponential for the part of the collateral they provided.</p>
+<h3 id="C-External-Collateral-provision-from-the-Pool"><a href="#C-External-Collateral-provision-from-the-Pool" class="headerlink" title="C.  External Collateral provision from the Pool"></a>C.  <strong>External Collateral provision from the Pool</strong></h3><p>Providing the collateral for the stablecoin through a method of external funding backed by incentives offer for a structure which has two independent parts which function together to make the system functional. The external collateral pool being a separate entity for controlling the stability ensures that the instability of the market is not a concern for the proper functioning of the application. Separating the collateral pool and disconnecting all the relation with the other aspect of the stablecoin structure also allows the system to adapt to an alternate method of gathering collateral if required. This increases on the security aspect and makes sure that the system has a 100% uptime.</p>
+<h2 id="4-Explaining-competition"><a href="#4-Explaining-competition" class="headerlink" title="4. Explaining competition"></a>4. Explaining competition</h2><h3 id="A-Anonymity-to-enforce-competition"><a href="#A-Anonymity-to-enforce-competition" class="headerlink" title="A.  Anonymity to enforce competition"></a>A.  <strong>Anonymity to enforce competition</strong></h3><p>The portion filled by other agents are anonymous. This provides with a competitive glance to filling up the maximal portion of the collateral amount. After all the agents are done filling up the collateral, an internal threshold is formed which partitions the point of profit&#x2F;loss on either side.</p>
+<h3 id="B-Risk-x2F-Reward-Gains"><a href="#B-Risk-x2F-Reward-Gains" class="headerlink" title="B.  Risk&#x2F;Reward Gains"></a>B.  <strong>Risk&#x2F;Reward Gains</strong></h3><p><img src="/images/stablecoin_1.png" alt="Collateral Distribution"><br><strong>Fig 1: Collateral Pool structure</strong></p>
+<p>The Anonymity brings in a concept of a strategic game built into the system. The lenders or collateral providers are provided to maximize their lending capacity considering the risk factor to it. The Rewards are directly related to the amount of investments, and not knowing what the other person has pooled in, makes sense to try and provide the maximal amount for pooling. Only the risk factor is the criteria for slashing the funds if a volatility issue comes up.</p>
+<h3 id="C-Keeping-the-system-alive"><a href="#C-Keeping-the-system-alive" class="headerlink" title="C.  Keeping the system alive"></a>C.  <strong>Keeping the system alive</strong></h3><p>The competition among the lenders ensures a faster disbursal rate and almost provides with an instantaneous rate for providing with the capital. Crypto-collateralized stablecoins currently in existence provide with a method to collateralize instantly, but this mechanism comes closer while solving a larger scale of problem. The speed of disbursal increases with the competition which is further increased by trust in the system.</p>
+<h2 id="5-Explaining-the-Money-Money-Algorithm"><a href="#5-Explaining-the-Money-Money-Algorithm" class="headerlink" title="5. Explaining the Money-Money Algorithm"></a>5. Explaining the Money-Money Algorithm</h2><h3 id="A-Designing-the-algorithm"><a href="#A-Designing-the-algorithm" class="headerlink" title="A.  Designing the algorithm"></a>A.  <strong>Designing the algorithm</strong></h3><p>The Algorithm takes care of the return distribution to the investors to the collateral pool. A strong and intelligent mechanism would motivate the investors and borrowers (the token buyers) to play a strategic game together and keep the system functional. The algorithm tends to provide returns in an exponential form with respect to the amount invested or the rate of involvement in the system.</p>
+<h3 id="B-Description-of-the-design"><a href="#B-Description-of-the-design" class="headerlink" title="B.  Description of the design"></a>B.  <strong>Description of the design</strong></h3><p>The Algorithm shows the Distribution of the MARGIN (CURRENT ETH VALUE (-) STABLECOIN PURCHASED) in an Exponential way proportional to the Amount invested</p>
+<p>Let,</p>
+<p><em>Incentive[i] &#x3D; Incentive of individual investor</em></p>
+<p><em>Lsum &#x3D; Total amount of collected incentives</em></p>
+<p><em>filled[i] &#x3D; Portion filled by ith person</em></p>
+<p><em>T &#x3D; Total Limit</em></p>
+<p><em>A &#x3D; Amount cumulated</em></p>
+<p><img src="/images/stablecoin_2.png" alt="calc"></p>
+<h3 id="C-Optimal-Strategy"><a href="#C-Optimal-Strategy" class="headerlink" title="C.  Optimal Strategy"></a>C.  <strong>Optimal Strategy</strong></h3><p>The optimal strategy is to fill the highest fraction of the collateral amount to get huge profits in any. The competition among the investors for landing in the better side of the curve (filling the most parts of the collateral), will mean faster fulfillment. To further elaborate the exact advantages of the investors, listing out the two cases-</p>
+<p>• <em>When ETH prices go up, people above the optimal point receive a higher profit than what they could have got by simply holding the ETH</em></p>
+<p>• <em>When ETH prices go down, loss is very less compared to what they would have incurred by simply holding the ETH, if they are above the optimal point.</em></p>
+<p>So, irrespective of the direction Ethereum (or the underlying asset) takes, the investor is in a favorable position in all conditions. There isn’t an associated luck factor, since it is clearly evident how a user can settle above the optimal point.</p>
+<h2 id="6-Statistics"><a href="#6-Statistics" class="headerlink" title="6. Statistics"></a>6. Statistics</h2><p>The stablecoins structure proposed is non-linear type when it comes to the returns offered against investments. Because of the exponential structure of the profits there exists a threshold which has to be crossed in order to attain the profits. The profits are the reason which forces the lenders to push for the extra mile and go for the extra rewards. The competition for the extra reward motivates everyone to compete and increase the disbursal rate.</p>
+<p><img src="/images/stablecoin_3.png" alt="Statistics"></p>
+<p><strong>Fig 2: Comparing Incentives vs Investments</strong></p>
+<p>The red graph plots the investments to the rewards for a cryptocurrency like Dai, while the blue graph plots the performance of the proposed platform, the point in the center specifies the central point or the threshold to land with extra rewards. Whether it’s a bull or bear crypto market, investing in the collateral pool will mean greater profits or lesser losses for investors, and strengthen a stablecoin architecture on the other side.</p>
+<h2 id="7-Additional-Integrations"><a href="#7-Additional-Integrations" class="headerlink" title="7. Additional Integrations"></a>7. Additional Integrations</h2><h3 id="A-Introduction-of-a-Secondary-token"><a href="#A-Introduction-of-a-Secondary-token" class="headerlink" title="A.  Introduction of a Secondary token"></a>A.  <strong>Introduction of a Secondary token</strong></h3><p>A secondary token could be introduced to the ecosystem which could bind both the tokens together when maintaining stability. The secondary token could also be traded in a similar manner with the differences only being in the usage-</p>
+<p>• Adjust the supply and demand manually by investors to maintain the stability of the primary currency</p>
+<p>• Be used as a token to prevent or distribute losses in a better way in the situation of a high risk volatility</p>
+<h3 id="B-Adding-a-lending-service-to-integrate-with-the-ecosystem"><a href="#B-Adding-a-lending-service-to-integrate-with-the-ecosystem" class="headerlink" title="B.  Adding a lending service to integrate with the ecosystem"></a>B.  <strong>Adding a lending service to integrate with the ecosystem</strong></h3><p>The stablecoin can be considered to be a loan itself, and stablecoins are provided in exchange for a collateral. The ecosystem already uses a method to provide collateral by third-party or entities who are not acquiring the stablecoins. The point of the collateral can be improvised to incorporate a lending structure [4] to make up for the losses by the market volatility. The amount existent in the collateral pool is a possible way to use the money to make up for losses in the system, or can be partnered with a microfinance entity. This also however, could bring up some issues, namely-</p>
+<p>• Introduce a separate entity of trust with the collateral pool</p>
+<p>• Provide a point of liquidity risk when collateral pool is depleted lower enough than the market capacity [5]</p>
+<h2 id="8-Implementation-Discussion"><a href="#8-Implementation-Discussion" class="headerlink" title="8. Implementation Discussion"></a>8. Implementation Discussion</h2><p>Listing out the main components of the ecosystem:-</p>
+<p>• Ethereum Smart Contracts</p>
+<p>• ERC-20 token</p>
+<p>• Wallet</p>
+<p>• Interest distribution Algorithm</p>
+<p>The stablecoin is designed to be functional at the Ethereum main network as an ERC-20 token standard. The token was created using solidity smart contracts and deployed on the Ethereum network. A secondary token can be created to maintain or further improve the stability of the existing token. The secondary token is the backing token and could also be an investment medium for several third parties. The smart contracts are the way to implement these tokens on the Ethereum framework. Smart contract is a piece of code that lives on the world-computer- the Ethereum Blockchain and maintains the state of the universe. The process of using the token i.e. buying and transferring can be done by interacting with the contract. Instead of the direct interaction with the contract, some users could also prefer to use a wallet service to avoid directly using the function calls of the contract. The application has been tested by creating a wallet, which provides a medium to interact with the contract and perform the necessary functions.</p>
+<h2 id="9-Conclusion"><a href="#9-Conclusion" class="headerlink" title="9. Conclusion"></a>9. Conclusion</h2><p>This solution provides with a proper and unique strategy to encourage more people into the system to pool in money as the collateral, while providing them meaningful profits from the system and also stabilizing the system to maintain the stable value to a fiat currency. This not only helps in creating a stable ecosystem or currency structure but also increases economic activity and currency flow [6].</p>
+<p>Additionally, the platform also ensures total functionality in all the discovered scenarios with proper integrity and completeness throughout all the components in this proposed system. The proposed system can be hence, easily integrated to an existing stablecoins structure or be created afresh.</p>
+<h2 id="10-References"><a href="#10-References" class="headerlink" title="10. References"></a>10. References</h2><ol>
+<li><p>Kenji Saito, Mitsuru Iwamura, “How to Make a Digital Currency on a<br>Blockchain Stable Future Generation Computer Systems, Volume 100,<br>2019, Pages 58-69.</p>
+</li>
+<li><p>Klages-Mundt, Ariah &amp; Minca, Andreea. (2019). (In) Stability for the<br>Blockchain: Deleveraging Spirals and Stablecoin Attacks.</p>
+</li>
+<li><p>Ingolf G.A. Pernice, Sebastian Henningsen, Roman Proskalovich,<br>Martin Florian, Hermann Elendner, Björn Scheuermann, Monetary<br>Stabilization in Cryptocurrencies - Design Approaches and Open<br>Questions, IEEE Crypto Valley Conference on Blockchain Technology<br>(CVCBT), 28^th^ May 2019</p>
+</li>
+<li><p>Black, Matthew &amp; Liu, TingWei &amp; Cai, Tony. (2019). Atomic Loans:<br>Cryptocurrency Debt Instruments, 16 Jan 2019.</p>
+</li>
+<li><p>Stjepan Begušić, Zvonko Kostanjčar, Momentum and liquidity in<br>cryptocurrencies, 1 Apr 2019</p>
+</li>
+<li><p>Peter Krafft, Nicolás Della Penna, Alex &#39;Sandy&#39; Pentland, An<br>Experimental Study of Cryptocurrency Market Dynamics, CHI &#39;18 2018</p>
+</li>
+</ol>
+
+  </div>
+</article>
+<br><br>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-State-of-Existing-Problems"><span class="toc-number">3.</span> <span class="toc-text">2. State of Existing Problems</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Artificial-Markets"><span class="toc-number">3.1.</span> <span class="toc-text">A.  Artificial Markets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Market-Manipulation"><span class="toc-number">3.2.</span> <span class="toc-text">B.  Market Manipulation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-An-Update-to-the-Architecture"><span class="toc-number">4.</span> <span class="toc-text">3. An Update to the Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-The-process"><span class="toc-number">4.1.</span> <span class="toc-text">A.  The process</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Incentives-for-Investment"><span class="toc-number">4.2.</span> <span class="toc-text">B.  Incentives for Investment</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-External-Collateral-provision-from-the-Pool"><span class="toc-number">4.3.</span> <span class="toc-text">C.  External Collateral provision from the Pool</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Explaining-competition"><span class="toc-number">5.</span> <span class="toc-text">4. Explaining competition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Anonymity-to-enforce-competition"><span class="toc-number">5.1.</span> <span class="toc-text">A.  Anonymity to enforce competition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Risk-x2F-Reward-Gains"><span class="toc-number">5.2.</span> <span class="toc-text">B.  Risk&#x2F;Reward Gains</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-Keeping-the-system-alive"><span class="toc-number">5.3.</span> <span class="toc-text">C.  Keeping the system alive</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Explaining-the-Money-Money-Algorithm"><span class="toc-number">6.</span> <span class="toc-text">5. Explaining the Money-Money Algorithm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Designing-the-algorithm"><span class="toc-number">6.1.</span> <span class="toc-text">A.  Designing the algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Description-of-the-design"><span class="toc-number">6.2.</span> <span class="toc-text">B.  Description of the design</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-Optimal-Strategy"><span class="toc-number">6.3.</span> <span class="toc-text">C.  Optimal Strategy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Statistics"><span class="toc-number">7.</span> <span class="toc-text">6. Statistics</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Additional-Integrations"><span class="toc-number">8.</span> <span class="toc-text">7. Additional Integrations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Introduction-of-a-Secondary-token"><span class="toc-number">8.1.</span> <span class="toc-text">A.  Introduction of a Secondary token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Adding-a-lending-service-to-integrate-with-the-ecosystem"><span class="toc-number">8.2.</span> <span class="toc-text">B.  Adding a lending service to integrate with the ecosystem</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Implementation-Discussion"><span class="toc-number">9.</span> <span class="toc-text">8. Implementation Discussion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusion"><span class="toc-number">10.</span> <span class="toc-text">9. Conclusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-References"><span class="toc-number">11.</span> <span class="toc-text">10. References</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2020/04/21/stablecoin/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&text=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&is_video=false&description=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Incentivized Third Party Collateralization for Stablecoins&body=Check out this article: https://souradeep-das.github.io/2020/04/21/stablecoin/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&title=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2020/04/21/stablecoin/&name=Incentivized Third Party Collateralization for Stablecoins&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2020/04/21/stablecoin/&t=Incentivized Third Party Collateralization for Stablecoins"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    Souradeep Das
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

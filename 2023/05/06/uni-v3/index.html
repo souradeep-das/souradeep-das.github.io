@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="After much thoughtful contemplation, the diligent unicorn has finally decided to reach for newer pastures. All of this, of-course, happened with the passing of proposal #18018, the community has now">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploying Uniswap V3: A developers guide to Navigating the Complexities">
+<meta property="og:url" content="https://souradeep-das.github.io/2023/05/06/uni-v3/index.html">
+<meta property="og:site_name" content="Souradeep is typing...">
+<meta property="og:description" content="After much thoughtful contemplation, the diligent unicorn has finally decided to reach for newer pastures. All of this, of-course, happened with the passing of proposal #18018, the community has now">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/rXjX3wa.jpg">
+<meta property="article:published_time" content="2023-05-06T12:40:32.000Z">
+<meta property="article:modified_time" content="2023-06-30T05:58:06.000Z">
+<meta property="article:author" content="Souradeep Das">
+<meta property="article:tag" content="Layer 2">
+<meta property="article:tag" content="Rollup">
+<meta property="article:tag" content="Defi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/rXjX3wa.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon4.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192_4.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon4.png">
+        
+      
+    
+    <!-- title -->
+    
+      <title>Souradeep's Blog: Deploying Uniswap V3: A developers guide to Navigating the Complexities</title>
+    
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/09/28/parallel-exec/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2023/05/06/uni-v3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&text=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&is_video=false&description=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deploying Uniswap V3: A developers guide to Navigating the Complexities&body=Check out this article: https://souradeep-das.github.io/2023/05/06/uni-v3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&name=Deploying Uniswap V3: A developers guide to Navigating the Complexities&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2023/05/06/uni-v3/&t=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Accio with the unicorn core  (or) how to deploy the core v3 contracts?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">Ownership across layers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text">Verifying the contracts on Etherscan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Deploying the Universal Router</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">The curious case of Permit2 and Deterministic Deployments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">Verifying the contracts for other non-supported chains</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    <!-- 
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Deploying Uniswap V3: A developers guide to Navigating the Complexities
+    </h1>
+
+
+ -->
+    <!-- just remove the below if not needed -->
+    
+    
+    
+    
+    
+    <h1 class="posttitle">
+      Deploying Uniswap V3:
+      
+        <br>
+        <span class="subheading"><em>A developers guide to Navigating the Complexities</em></span>
+      
+    </h1>
+    
+    
+
+    <div class="meta">
+      <!-- <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Souradeep Das</span>
+      </span> -->
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-06T12:40:32.000Z" class="dt-published" itemprop="datePublished">2023-05-06</time>
+        
+      
+    </div>
+
+
+      <span class="reading-time">
+      <i class="fa-regular fa-clock"></i>
+      21 minute read
+      </span>
+      
+
+      <!-- 
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Defi/" rel="tag">Defi</a>, <a class="p-category" href="/tags/Layer-2/" rel="tag">Layer 2</a>, <a class="p-category" href="/tags/Rollup/" rel="tag">Rollup</a>
+    </div>
+ -->
+
+
+    <div class="article-tag">
+      <i class="fa-solid fa-tag"></i>
+      
+        <a href="/tags/Layer-2/">#Layer 2</a>
+        
+          ,
+        
+      
+        <a href="/tags/Rollup/">#Rollup</a>
+        
+          ,
+        
+      
+        <a href="/tags/Defi/">#Defi</a>
+        
+      
+    </div>
+  
+  
+  
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <!-- # **Deploying Uniswap V3:** <br>*A developers guide to Navigating the Complexities* -->
+
+<p>After much thoughtful contemplation, the diligent unicorn has finally decided to reach for newer pastures. All of this, of-course, happened with the passing of proposal <a target="_blank" rel="noopener" href="https://gov.uniswap.org/t/deploy-uniswap-v3-to-boba-network/18018">#18018</a>, the community has now decided to launch Uniswap V3 to the Boba Network L2 on Ethereum! As of the current stance, the Uniswap community has been actively voting to deploy V3 on several other chains too, and with the license expiry this April- we may expect several other V3 forks to come up soon.</p>
+<p>The primary step to Deploying Uniswap V3 (or for that matter a clone) is to deploy the smart contracts that make up this amazing V3 protocol, and that’s exactly what we will be covering in this article. </p>
+<p>Before we begin, the Uniswap team deserves a huge shout out for assimilating all the associated content in an organized unified location.<br><a target="_blank" rel="noopener" href="https://github.com/Uniswap/v3-new-chain-deployments">V3 new chain repo</a><br><a target="_blank" rel="noopener" href="https://github.com/Uniswap/deploy-v3">V3 deploy repo</a></p>
+<p>These repositories serve their purpose very well and we(and you) will be using these throughout the article. However, despite their best efforts (and at no fault of theirs), the deployment process might include several intricacies, primarily associated with carrying out the steps on a chain other than Ethereum. While it is not possible, and probably unfair to ask to list out all these intricacies or extra details, this article stands to serve the exact purpose and complement the repos by filling in as many information gaps to make your deployment experience a breeze!</p>
+<p><em>As an added note: the uniswap repos are a work in progress. Look out for the github “commits” mentioned to get the most consistent results from this article</em></p>
+<h2>Accio with the unicorn core  (or) how to deploy the core v3 contracts?</h2>
+
+<p>Get the “<a target="_blank" rel="noopener" href="https://github.com/Uniswap/deploy-v3">v3-deploy repo</a>“ and clone it into your local system<br>Commit: <code>b7aac0f</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/Uniswap/deploy-v3.git</span><br><span class="line">$ cd deploy-v3</span><br><span class="line">$ yarn &amp;&amp; yarn build</span><br></pre></td></tr></table></figure>
+<p>This repo collects almost all of the contracts that make up the v3 protocol, and additionally provides scripts to deploy them easily, all in a single command. But wait, however appealing that command might be to run now, lets first make sure we have everything necessary and in place.</p>
+<p>The command would require the following arguments:-</p>
+<p><strong>Private key</strong> - an account that has funds to deploy the contracts, this account will not have any privileges on the contract</p>
+<p><strong>Json prc</strong> - the json rpc url of the network where you will deploy</p>
+<p><strong>Weth9 address</strong> - address of the WETH9 contract on the specific chain where you are deploying</p>
+<p><strong>Native currency label</strong> - the native token symbol (ETH)</p>
+<p><strong>Owner address</strong> - ??</p>
+<p><strong>Confirmations</strong> - the no of confirmations to wait before each transaction (if you are using a L2 with instant soft finality, select:  “0”)</p>
+<p>(there are some other optional arguments - state, v2coreFactory and gasPrice, which you don’t have to worry about unless you know what you are doing)</p>
+<p><u>What about the Owner address?</u></p>
+<p>The owner address that you will use here, will specifically control the following on your deployed contracts-<br>a) UniswapV3Factory contracts owner privileges that allow control over pool protocol fees<br>b) The ownership of the proxy contract for NonfungibleTokenPositionDescriptor</p>
+<p>The address you select here will depend on what you want to do for the deployments</p>
+<p>Do you want to centrally control the parameters for your deployment? <em>Choose an address that you deem to be the admin</em></p>
+<p>Do you have a DAO that should control the parameters? <em>Chose the DAO address to be the owner (for most cases of compound like DAOs, this is the Timelock contract)</em></p>
+<p>Do you want the Uniswap DAO (or a DAO on a different layer) to control the parameters? In case you are deploying Uniswap to a new chain, as was the case for Boba - here’s what you need to do. </p>
+<h3>Ownership across layers</h3>
+
+<p>In order for the Uniswap DAO on Ethereum to assume ownership of your contracts that are on a different chain, you will have to use some form of messaging system. In the case of several L2s and rollups, there exists a default message passing system that enables taking data from L1&gt;L2.</p>
+<p>In case of Boba&#x2F;Optimism or the likes this is the crossDomainMessenger which enables message passing, while in the core it is the enqueue() feature that allows users to trigger transaction on L2 by enqueueing transactions on L1 </p>
+<p><font color="green"> Caution: The following contract works only for protocols that use the Optimism messaging system, furthermore comments in green signify commands for Boba Network</p>
+<p>For this we use a contract on L2 that forwards messages from an L1 address, in other words - any L2 contract that has the following contract set as an owner, (or another privilege) will ultimately be owned by the <code>l1Owner</code> address on the ‘root’ chain (here, ethereum)<br></font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity 0.7.6;</span><br><span class="line"></span><br><span class="line">interface Messenger &#123;</span><br><span class="line">    function sendMessage(address _target, bytes memory _message, uint32 _gasLimit) external;</span><br><span class="line"></span><br><span class="line">    function relayMessage(</span><br><span class="line">        address _target,</span><br><span class="line">        address _sender,</span><br><span class="line">        bytes memory _message,</span><br><span class="line">        uint256 _messageNonce</span><br><span class="line">    ) external;</span><br><span class="line"></span><br><span class="line">    function xDomainMessageSender() external view returns (address);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// L2 Contract which receives messages from a specific L1 address and transparently</span><br><span class="line">// forwards them to the destination.</span><br><span class="line">// </span><br><span class="line">// Any other L2 contract which uses this contract&#x27;s address as a privileged position,</span><br><span class="line">// can be considered to be owned by the `l1Owner`</span><br><span class="line">contract CrossChainAccount &#123;</span><br><span class="line">    Messenger messenger;</span><br><span class="line">    address l1Owner;</span><br><span class="line"></span><br><span class="line">    constructor(Messenger _messenger, address _l1Owner) &#123;</span><br><span class="line">        messenger = _messenger;</span><br><span class="line">        l1Owner = _l1Owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // `forward` `calls` the `target` with `data`, </span><br><span class="line">    // can only be called by the `messenger`</span><br><span class="line">    // can only be called if `tx.l1MessageSender == l1Owner`</span><br><span class="line">    function forward(address target, bytes memory data) external &#123;</span><br><span class="line">        // 1. The call MUST come from the L1 Messenger</span><br><span class="line">        require(msg.sender == address(messenger), &quot;Sender is not the messenger&quot;);</span><br><span class="line">        // 2. The L1 Messenger&#x27;s caller MUST be the L1 Owner</span><br><span class="line">        require(messenger.xDomainMessageSender() == l1Owner, &quot;L1Sender is not the L1Owner&quot;);</span><br><span class="line">        // 3. Make the external call</span><br><span class="line">        (bool success, bytes memory res) = target.call(data);</span><br><span class="line">        require(success, string(abi.encode(&quot;XChain call failed:&quot;, res)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font color="green"> The contract takes two parameters -<br><strong>_messenger</strong> &#x3D; the messenger on L2 (L2CrossDomainMessenger for Boba)<br><strong>_l1Owner</strong> &#x3D; the address on L1 which actually holds ownership of any privilege the contract above has (Uniswap Timelock contract on L1 for Boba)</p>
+<p>For Boba, this is the contract that is deployed and has been given the ownership of the core uniswap contracts<br></font></p>
+<p><br><br></p>
+<p>Now that we have figured out what the Owner address should be, let’s continue with the deployment!</p>
+<p>Thanks to the script just run the following with your own arguments on your local clone of “v3-deploy” -</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn start -pk &lt;enter-private-key&gt; -j &lt;your-rpc-endpoint&gt; -w9 &lt;weth-address&gt; -ncl &lt;native token label&gt; -o &lt;owner-address-we-decided-upon&gt; -c &lt;no-of-block-confirmations&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="green"> For eg, the command to deploy Uniswap-v3 on Boba </font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yarn start -pk &lt;redacted&gt; -j https://mainnet.boba.network -w9 0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000 -ncl ETH -o 0x53163235746CeB81Da32293bb0932e1A599256B4 -c 0</span><br></pre></td></tr></table></figure>
+
+<p>You will see the contracts being deployed (and some ownership being transferred). And, when all the steps are done - you would also notice a state.json file which holds the deployed addresses. </p>
+<p>If the deployment fails in between, rerunning the command will use the state.json file and resume the deployment process from where you stopped.</p>
+<p>Known issue - If during a deployment run, the process fails after step 11 i.e “UniswapV3Factory ownership set” - a subsequent run may fail - because adding a new fee tier (step 2) from the script expects the owner of UniswapV3Factory to be the deployer. In this case - try modifying the script to ignore step 2, or start a fresh deployment by deleting state.json</p>
+<h3>Verifying the contracts on Etherscan</h3>
+
+<p>In order to verify these contracts, we will have to revert back to the repositories in which these contracts actually live.</p>
+<p>Just open a new window, and clone all of these repositories</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/Uniswap/v3-core &amp;&amp; git clone https://github.com/Uniswap/v3-periphery.git &amp;&amp; git clone https://github.com/Uniswap/v3-staker.git &amp;&amp; git clone https://github.com/Uniswap/swap-router-contracts.git</span><br></pre></td></tr></table></figure>
+<p>We will use the @nomiclabs&#x2F;hardhat-etherscan plugin to verify which all these repos already have set up, so you won’t have to do a thing as long as hardhat-etherscan supports the network on which you are deploying</p>
+<p><u>What if hardhat-etherscan doesn’t natively support the network?</u></p>
+<p>The plugin fortunately allows adding custom networks for verification. (if it does not hardhat-etherscan is probably on an older version, update it to (^3.1.6)<br>Update it to the latest with</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm remove @nomiclabs/hardhat-etherscan</span><br><span class="line">$ npm install --save-dev @nomiclabs/hardhat-etherscan</span><br></pre></td></tr></table></figure>
+<p>To enable your custom chain with the hardhat-etherscan plugin, add the network to the list, and a custom chain field to etherscan like the following: (and do this for all the repos we have cloned)</p>
+<p><font color="green"> For eg, on Boba the config should look like- </font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">networks: &#123;</span><br><span class="line">   hardhat: &#123;</span><br><span class="line">     allowUnlimitedContractSize: false,</span><br><span class="line">   &#125;,</span><br><span class="line">   mainnet: &#123;</span><br><span class="line">     url: `https://mainnet.infura.io/v3/$&#123;process.env.INFURA_API_KEY&#125;`,</span><br><span class="line">   &#125;,</span><br><span class="line">   ...</span><br><span class="line">   ...</span><br><span class="line">   &#x27;boba-mainnet&#x27;: &#123;</span><br><span class="line">     url: &#x27;https://mainnet.boba.network&#x27;,</span><br><span class="line">   &#125;,</span><br><span class="line"> &#125;,</span><br><span class="line"> etherscan: &#123;</span><br><span class="line">   // Your API key for Etherscan</span><br><span class="line">   // Obtain one at https://etherscan.io/</span><br><span class="line">   apiKey: &#123;</span><br><span class="line">     &#x27;boba-mainnet&#x27;: &#x27;&lt;enter-etherscan-api-key&gt;&#x27;,</span><br><span class="line">   &#125;,</span><br><span class="line">   customChains: [</span><br><span class="line">     &#123;</span><br><span class="line">       network: &#x27;boba-mainnet&#x27;,</span><br><span class="line">       chainId: 288,</span><br><span class="line">       urls: &#123;</span><br><span class="line">         apiURL: &#x27;https://api.bobascan.com/api&#x27;,</span><br><span class="line">         browserURL: &#x27;https://bobascan.com&#x27;,</span><br><span class="line">       &#125;,</span><br><span class="line">     &#125;,</span><br><span class="line">   ]</span><br><span class="line"> &#125;,</span><br><span class="line"> ...</span><br><span class="line"> ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><br><br></p>
+<p>Now that hardhat-etherscan is ready, in case it wasn’t, let’s use it to verify the contracts we just deployed.</p>
+<p>All the contracts are distributed among the four repos, and a key is given below:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v3-core: UniswapV3Factory.sol, </span><br><span class="line">v3-periphery: UniswapInterfaceMulticall.sol, TickLens.sol, NFTDescriptor.sol, NonfungibleTokenPositionDescriptor.sol*, NonfungiblePositionManager*, V3Migrator*</span><br><span class="line">v3-staker: UniswapV3Staker.sol*, </span><br><span class="line">swap-router-contracts: QuoterV2.sol*, SwapRouter02.sol*</span><br></pre></td></tr></table></figure>
+
+<p>For each of these verify the contracts by running the following command on the respective repositories:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npx hardhat verify --network &lt;network-name&gt; &lt;deployed-contract-address&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="green"> For eg, verifying the UniswapV3Factory on Boba (use your own address)</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npx hardhat verify --network boba-mainnet 0xFFCd7Aed9C627E82A765c3247d562239507f6f1B</span><br></pre></td></tr></table></figure>
+
+<p>For some of these contracts (indicated with a * ) you would also need to provide the constructor arguments for verification</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npx hardhat verify --network &lt;network-name&gt; &lt;deployed-contract-address&gt; &lt;constructor-arg-1&gt; &lt;constructor-arg-2&gt; …</span><br></pre></td></tr></table></figure>
+
+<p><font color="green"> For eg, verifying the NonfungibleTokenPositionDescriptor on Boba (use your own address) </font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npx hardhat verify --network boba-mainnet 0xb6751A274EDAe02A911E3bB23682FAaF380433b7 &quot;0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000&quot; &quot;0x0000000000000000000000000000000000000000000000000000000000455448&quot;</span><br></pre></td></tr></table></figure>
+
+<p><font color="green">And verifying the UniswapV3Staker on Boba </font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx hardhat verify --network boba-mainnet 0x6a6c1198f85B084822138DFd3fA9686e4029c091 &quot;0xFFCd7Aed9C627E82A765c3247d562239507f6f1B&quot; &quot;0x0bfc9aC7E52f38EAA6dC8d10942478f695C6Cf71&quot; &quot;2592000&quot; &quot;1892160000&quot;</span><br></pre></td></tr></table></figure>
+
+<p>That’s it! You should now have a set of uniswap v3 contracts deployed, verified and ready to take on all those transactions. Give yourself a pat in the back, take a deep breath, think happy thoughts, and let’s slay that final challenge!</p>
+<p><br><br></p>
+<h2>Deploying the Universal Router</h2>
+
+<p>The Universal Router is something that you might or might not need, depending on your use case for the contracts. <a target="_blank" rel="noopener" href="https://blog.uniswap.org/permit2-and-universal-router">The Universal Router is a fairly new addition</a> to Uniswap, which allows optimizing trades across multiple token types, and the “interfaces” have been moving forwards to utilizing it!</p>
+<p>This is where the Universal Router lives: <a target="_blank" rel="noopener" href="https://github.com/Uniswap/universal-router">https://github.com/Uniswap/universal-router</a><br>Commit: <code>f0e15fe</code></p>
+<p>Clone the repo along with its submodules and build it</p>
+<p><font color="red">WARNING:</font> make sure you have commit <code>f0e15fe</code> or later (latest). The older version with json parameters support, includes an error where constructor arguments are offset by 2, and will result in an incorrect deployment</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone --recurse-submodules https://github.com/Uniswap/universal-router.git</span><br><span class="line">$ cd universal-router</span><br><span class="line">$ yarn &amp;&amp; yarn compile</span><br></pre></td></tr></table></figure>
+
+<p>Install Forge if you do not have it installed, follow the installation docs here: <a target="_blank" rel="noopener" href="https://github.com/foundry-rs/foundry">https://github.com/foundry-rs/foundry</a></p>
+<p>Now that we have cloned the repo locally, like we have practiced - let’s take a moment and make sure we have everything we need in order to proceed</p>
+<p>This deployment process includes the deployment of three contracts, namely-<br>i) UniversalRouter<br>ii) UnsupportedProtocol<br>iii) Permit2</p>
+<p>And, these are the parameters the Universal Router works with and we will have to specify</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">           permit2, </span><br><span class="line">           weth9,</span><br><span class="line">           seaport,</span><br><span class="line">           seaportV1_4,</span><br><span class="line">           openseaConduit,</span><br><span class="line">           nftxZap,</span><br><span class="line">           x2y2,</span><br><span class="line">           foundation,</span><br><span class="line">           sudoswap,</span><br><span class="line">           elementMarket,</span><br><span class="line">           nft20Zap,</span><br><span class="line">           cryptopunks,</span><br><span class="line">           looksRare,</span><br><span class="line">           routerRewardsDistributor,</span><br><span class="line">           looksRareRewardsDistributor,</span><br><span class="line">           looksRareToken,</span><br><span class="line">           v2Factory,</span><br><span class="line">           v3Factory,</span><br><span class="line">           pairInitCodeHash,</span><br><span class="line">           poolInitCodeHash,</span><br><span class="line">           paymentRecipient,</span><br><span class="line">           paymentAmountBips,</span><br><span class="line">unsupported</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3>The curious case of Permit2 and Deterministic Deployments</h3>
+
+<p>Of the three contracts, Permit2 is deployed using CREATE2 (deterministic deployment) to have the same address across chains.</p>
+<p>If your chain does not enforce strict replay protection you could safely skip this section!</p>
+<p>The most common Deterministic Deployment contract is <a target="_blank" rel="noopener" href="https://github.com/Arachnid/deterministic-deployment-proxy">https://github.com/Arachnid/deterministic-deployment-proxy</a>, and this is also what forge uses when you will run the script. It uses a novel method called - Nick’s method, which works with a pre-signed deployment tx (without chainId) to deploy the Deterministic Deployment Proxy to the same address “0x4e59b44847b379578588920ca78fbf26c0b4956c” on all chains. (and this proxy further allows for deterministic deployments through CREATE2)</p>
+<p>However, some EVM chains have strict replay protection enabled (<a target="_blank" rel="noopener" href="https://eips.ethereum.org/EIPS/eip-155">EIP-155</a>), in other words they do not allow submitting transaction without a chainId, (which is what the deployment of the Deterministic Deployment will demand), as is the case for Boba Network.</p>
+<p>Now, depending on the level where replay protection is enabled on the chain, there may still be ways to make the pre-signed tx work, and there’s and if it’s possible there’s a good chance that you will find the contract already deployed on the address “0x4e59b44847b379578588920ca78fbf26c0b4956c” for the chain.</p>
+<p>(For ex, Avax has replay protection on the json-rpc level, so spinning up a node without it enabled, allows to deploy the proxy)</p>
+<p>If we are still without the deterministic deployment proxy, the next best option probably is to use an alternative.<br>Gnosis Safes are some other contracts which require Deterministic Deployment, and demand consistency across all chains. As a result, the Gnosis team were quick to identify, and maintain a deterministic deployment factory (for EIP155 enabled chains) that, if deployed and used on most chains, would produce similar deterministic contract deployments. <a target="_blank" rel="noopener" href="https://github.com/safe-global/safe-singleton-factory">https://github.com/safe-global/safe-singleton-factory</a></p>
+<p>Find if a safe singleton factory exists on the chain, as an alternative for the deterministic deployment of Permit2</p>
+<p>To deploy the Permit2 using the deterministic deployment proxy, you will need to send a tx to the deployment proxy, with data &#x3D; encoded(salt, depl_code)</p>
+<p>Here’s a script that can enable you to submit such a tx<br><a target="_blank" rel="noopener" href="https://gist.github.com/souradeep-das/a30fd91296741234d11fabc5b06b9a72">https://gist.github.com/souradeep-das/a30fd91296741234d11fabc5b06b9a72</a></p>
+<p><br><br></p>
+<p>Alright, let’s return back to the parameters we took a look at before:</p>
+<p><em>permit2</em>: set it to address(0) if you have the deterministic deployment proxy at “0x4e59b44847b379578588920ca78fbf26c0b4956c” and want the script to deploy it for you (or) if you do not - refer to the previous section and deploy the Permit2 using the alt proxy</p>
+<p><em>weth9</em>: set to the WETH9 address on the chain</p>
+<p><em>v3Factory</em>: set to the UniswapV3Factory that was deployed as a part of the core v3 deployment</p>
+<p><em>poolInitCodeHash</em>: set to “0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54” according to the value on your PoolAddress.sol contract (from the core deployments)</p>
+<p><em>pairInitCodeHash</em>: set to BYTES32_ZERO if UniswapV2 is not supported</p>
+<p><em>unsupported</em>: set to address(0) if you want this to be deployed along with the script</p>
+<p>All the remaining parameters need to be set to address(0) or <strong>UNSUPPORTED_PROTOCOL</strong>, or 0 values</p>
+<p>Create a new file under script&#x2F;deployParameters - <code>DeployNetwork.s.sol</code> and add in the appropriate parameters. Use DeployGoerli.s.sol as reference (you will have to replace the parameters and the contract name)</p>
+<p>Assuming you have now put the required parameters in a file called <code>DeployNetwork.s.sol</code>, the command to deploy is:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge script --broadcast --rpc-url &lt;rpc-url&gt; --private-key &lt;your-private-key&gt; --sig &#x27;run()&#x27; script/deployParameters/DeployNetwork.s.sol:DeployNetwork</span><br></pre></td></tr></table></figure>
+
+<p>If your chain is among the supported networks for forge verification, you could also verify the contracts with the deployment by adding the following three flags</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge script --broadcast --rpc-url &lt;rpc-url&gt; --private-key &lt;your-private-key&gt; --sig &#x27;run()&#x27; script/deployParameters/DeployNetwork.s.sol:DeployNetwork --chain-id &lt;chain-id-network&gt; --etherscan-api-key &lt;etherscan-api-key&gt; --verify</span><br></pre></td></tr></table></figure>
+
+
+<p><u>Fixing common errors</u></p>
+<p>Error:<br><font color="red">Failed to get EIP-1559 fees</font></p>
+<p>This means the chain you are trying to deploy doesn’t support EIP-1559, in which case deploy with the following flag added</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge script --broadcast --rpc-url &lt;rpc-url&gt; --private-key &lt;your-private-key&gt; --sig &#x27;run()&#x27; script/deployParameters/DeployNetwork.s.sol:DeployNetwork --chain-id &lt;chain-id-network&gt; --etherscan-api-key &lt;etherscan-api-key&gt; --verify --legacy</span><br></pre></td></tr></table></figure>
+
+
+<p>Error:<br><font color="red">Nonce already used</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge script --broadcast --rpc-url &lt;rpc-url&gt; --private-key &lt;your-private-key&gt; --sig &#x27;run()&#x27; script/deployParameters/DeployNetwork.s.sol:DeployNetwork --chain-id &lt;chain-id-network&gt; --etherscan-api-key &lt;etherscan-api-key&gt; --verify --legacy --slow</span><br></pre></td></tr></table></figure>
+
+<p>Once your contracts are deployed, make sure the arguments used were what you intended to use, and the protocols unsupported are set to the deployed unsupportedProtocol contract address. Refer to the generate file - latest.json under broadcast&#x2F; for the deployment info.</p>
+<h3>Verifying the contracts for other non-supported chains</h3>
+
+<p>To verify the UnsupportedProtocol and Universal Router contracts, make sure you are on the universal-router repo, and run the following:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge verify-contract &lt;unsupported-protocol-address&gt; contracts/deploy/UnsupportedProtocol.sol:UnsupportedProtocol --verifier-url &lt;etherscan-api-url&gt; --compiler-version &quot;v0.8.17+commit.8df45f5f&quot; --optimizer-runs 1000000 --chain-id &lt;chain-id&gt; --watch</span><br></pre></td></tr></table></figure>
+
+<p>And </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge verify-contract &lt;universal-router-address&gt; contracts/UniversalRouter.sol:UniversalRouter --constructor-args &lt;encoded-constructor-args&gt; --verifier-url &lt;etherscan-api-url&gt; --compiler-version &quot;v0.8.17+commit.8df45f5f&quot; --optimizer-runs 1000000 --chain-id &lt;chain-id&gt; --watch</span><br></pre></td></tr></table></figure>
+
+<p>One way to obtain the encoded constructor args is to use cast from foundry</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cast abi.encode &quot;constructor(address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,address,bytes32,bytes32,address,uint256)&quot; &lt;arg-1&gt; &lt;arg-2&gt; ….. &lt;arg-22&gt;</span><br></pre></td></tr></table></figure>
+
+<p><font color="green">For eg, on Boba</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge verify-contract 0x020A39620A5af7Ff456B2523C35fc8B897E9071a contracts/deploy/UnsupportedProtocol.sol:UnsupportedProtocol --verifier-url https://api.bobascan.com/api --compiler-version &quot;v0.8.17+commit.8df45f5f&quot; --optimizer-runs 1000000 --chain-id 288 --watch</span><br></pre></td></tr></table></figure>
+
+
+<p><br><br></p>
+<p>To verify permit2, grab the permit2 repo here <a target="_blank" rel="noopener" href="https://github.com/Uniswap/permit2">https://github.com/Uniswap/permit2</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/Uniswap/permit2.git</span><br><span class="line">$ cd permit2</span><br><span class="line">$ forge install</span><br></pre></td></tr></table></figure>
+
+<p>Now set <code>ETHERSCAN_API_KEY</code> as an env var<br>And then proceed to verify with</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge verify-contract &lt;permit2-contract-address&gt; src/Permit2.sol:Permit2 --verifier-url &lt;etherscan-api-url&gt; --compiler-version &quot;v0.8.17+commit.8df45f5f&quot; --optimizer-runs 1000000 --chain-id &lt;chain-id-of-network&gt; --watch</span><br></pre></td></tr></table></figure>
+
+<p><font color="green">For eg, on Boba</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ forge verify-contract 0xF80c91442D3EF66632958C0d395667075FC82fB0 src/Permit2.sol:Permit2 --verifier-url https://api.bobascan.com/api --compiler-version &quot;v0.8.17+commit.8df45f5f&quot; --optimizer-runs 1000000 --chain-id 288 --watch</span><br></pre></td></tr></table></figure>
+
+<p><br><br></p>
+<p>Congratulations! With all of that done, you now have a deployed set of Uniswap V3 contracts at your disposal, plus a universal router to go with it, in case you need one.<br>Cheers, and Goodbye for now!</p>
+<p><img src="https://i.imgur.com/rXjX3wa.jpg"></p>
+
+  </div>
+</article>
+<br><br>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Accio with the unicorn core  (or) how to deploy the core v3 contracts?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">Ownership across layers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text">Verifying the contracts on Etherscan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Deploying the Universal Router</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">The curious case of Permit2 and Deterministic Deployments</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">Verifying the contracts for other non-supported chains</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2023/05/06/uni-v3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&text=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&is_video=false&description=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Deploying Uniswap V3: A developers guide to Navigating the Complexities&body=Check out this article: https://souradeep-das.github.io/2023/05/06/uni-v3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&title=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2023/05/06/uni-v3/&name=Deploying Uniswap V3: A developers guide to Navigating the Complexities&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2023/05/06/uni-v3/&t=Deploying Uniswap V3: A developers guide to Navigating the Complexities"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    Souradeep Das
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Find more details about the Quasar and its construction: herewhich explains a fully trustless model for enabling fast exits in Plasma (or an equivalent L2 without smart contracts)  This is a continu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quasar Pool: Extending Quasar with Liquidity Pools">
+<meta property="og:url" content="https://souradeep-das.github.io/2021/03/24/quasar-pool/index.html">
+<meta property="og:site_name" content="Souradeep is typing...">
+<meta property="og:description" content="Find more details about the Quasar and its construction: herewhich explains a fully trustless model for enabling fast exits in Plasma (or an equivalent L2 without smart contracts)  This is a continu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://user-images.githubusercontent.com/26090752/112024138-e5484100-8b59-11eb-979d-2d72e08c6c93.jpg">
+<meta property="og:image" content="https://user-images.githubusercontent.com/26090752/112024174-ee391280-8b59-11eb-8406-fa7d7d460e98.jpg">
+<meta property="og:image" content="https://user-images.githubusercontent.com/26090752/104730150-86cca400-575f-11eb-8c90-13ffe288df78.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/26090752/104730170-91873900-575f-11eb-9135-07b6779a7507.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/26090752/104730186-9815b080-575f-11eb-8061-5fbe84a9e1ed.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/26090752/104730202-9d72fb00-575f-11eb-8302-f11ccfe89b96.png">
+<meta property="article:published_time" content="2021-03-23T22:26:47.000Z">
+<meta property="article:modified_time" content="2023-06-30T05:46:42.000Z">
+<meta property="article:author" content="Souradeep Das">
+<meta property="article:tag" content="Layer 2">
+<meta property="article:tag" content="Plasma">
+<meta property="article:tag" content="Research">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/26090752/112024138-e5484100-8b59-11eb-979d-2d72e08c6c93.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon4.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192_4.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon4.png">
+        
+      
+    
+    <!-- title -->
+    
+      <title>Souradeep's Blog: Quasar Pool: Extending Quasar with Liquidity Pools</title>
+    
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/04/13/quasar-cross-L2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/11/03/quasar/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2021/03/24/quasar-pool/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&text=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&is_video=false&description=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quasar Pool: Extending Quasar with Liquidity Pools&body=Check out this article: https://souradeep-das.github.io/2021/03/24/quasar-pool/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&name=Quasar Pool: Extending Quasar with Liquidity Pools&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2021/03/24/quasar-pool/&t=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-inception-of-a-Quasar-pool"><span class="toc-number">1.</span> <span class="toc-text">The inception of a Quasar pool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Change-1-Quasar-with-no-challenge-period"><span class="toc-number">2.</span> <span class="toc-text">Change 1. Quasar with no challenge period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Change-2-Quasar-pool-with-multiple-suppliers"><span class="toc-number">3.</span> <span class="toc-text">Change 2. Quasar pool with multiple suppliers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Returns-calculation"><span class="toc-number">4.</span> <span class="toc-text">Returns calculation:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-of-the-equation"><span class="toc-number">4.0.1.</span> <span class="toc-text">Proof of the equation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Returns-Per-Exit"><span class="toc-number">4.1.</span> <span class="toc-text">Returns Per Exit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Returns-Per-Week"><span class="toc-number">4.2.</span> <span class="toc-text">Returns Per Week</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scenario-1"><span class="toc-number">4.3.</span> <span class="toc-text">Scenario 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scenario-2"><span class="toc-number">4.4.</span> <span class="toc-text">Scenario 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scenario-3"><span class="toc-number">4.5.</span> <span class="toc-text">Scenario 3</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    <!-- 
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Quasar Pool: Extending Quasar with Liquidity Pools
+    </h1>
+
+
+ -->
+    <!-- just remove the below if not needed -->
+    
+    
+    
+    
+    
+    <h1 class="posttitle">
+      Quasar Pool:
+      
+        <br>
+        <span class="subheading"><em>Extending Quasar with Liquidity Pools</em></span>
+      
+    </h1>
+    
+    
+
+    <div class="meta">
+      <!-- <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Souradeep Das</span>
+      </span> -->
+      
+    <div class="postdate">
+      
+        <time datetime="2021-03-23T22:26:47.000Z" class="dt-published" itemprop="datePublished">2021-03-24</time>
+        
+      
+    </div>
+
+
+      <span class="reading-time">
+      <i class="fa-regular fa-clock"></i>
+      8 minute read
+      </span>
+      
+
+      <!-- 
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Layer-2/" rel="tag">Layer 2</a>, <a class="p-category" href="/tags/Plasma/" rel="tag">Plasma</a>, <a class="p-category" href="/tags/Research/" rel="tag">Research</a>
+    </div>
+ -->
+
+
+    <div class="article-tag">
+      <i class="fa-solid fa-tag"></i>
+      
+        <a href="/tags/Layer-2/">#Layer 2</a>
+        
+          ,
+        
+      
+        <a href="/tags/Plasma/">#Plasma</a>
+        
+          ,
+        
+      
+        <a href="/tags/Research/">#Research</a>
+        
+      
+    </div>
+  
+  
+  
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <!-- ## Quasar Pool Design -->
+
+<p>Find more details about the Quasar and its construction: <a href="/2020/11/03/quasar/" title="Quasar Fast Withdrawals: Instant Trustless Exits on Plasma">here</a><br>which explains a fully trustless model for enabling fast exits in Plasma (or an equivalent L2 without smart contracts) </p>
+<p>This is a continuation that explains a variation in the construction of the quasar, trading off a bit on the trustless side for easier UX&#x2F;usability. (specifically this is the first implementation used by OmiseGo,)</p>
+<p><em><strong>Note:</strong> the Quasar pool mentioned here is a plug-in to pool-in liquidity from several lenders and make things easy for someone running a Quasar contract. It is not an inherent requirement and the most ideal trustless Quasar should have funds pooled in only by the Quasar Owner.</em></p>
+<h2 id="The-inception-of-a-Quasar-pool"><a href="#The-inception-of-a-Quasar-pool" class="headerlink" title="The inception of a Quasar pool:"></a>The inception of a Quasar pool:</h2><p>This is what a trustless Quasar should look like (this just shows the flows of the funds, some steps about Quasar interaction eg: ticket, challenges, ifeClaims haven’t been shown) <br><br><br><img src="https://user-images.githubusercontent.com/26090752/112024138-e5484100-8b59-11eb-979d-2d72e08c6c93.jpg" alt="quasar_diagram_without external_pool"></p>
+<p>Here, the Quasar operator would put in funds on the ETH pool, and steps marked in ‘#’ are optional, the Quasar owner can do anything they want with the funds received on plasma after step 1. </p>
+<p><em>Why should an ideal trustless Quasar have funds pooled in only by the Quasar operator?</em></p>
+<p>A trustless Quasar shouldn’t need to trust anybody including the plasma operator. If you don’t trust the plasma operator, you are essentially contesting the validity of the tx inclusion proof (from step 2 of the above diagram). In that case you have a challenge period and prove any false claim wrong (after step 2). So, ideally since you are in control, you should have your own funds at stake, such that whenever there is a need, you actively challenge to protect your funds.</p>
+<p>Now also note that the need for a challenge would only come up in case there is a invalid inclusion proof (in other words when the child chain is byzantine - a mass exit scenario)</p>
+<p>If in an implementation the plasma operator is also running a Quasar - they trust themselves and hence have an opportunity to remove the challenge period from the Quasar!</p>
+<p>This brings us to:</p>
+<h2 id="Change-1-Quasar-with-no-challenge-period"><a href="#Change-1-Quasar-with-no-challenge-period" class="headerlink" title="Change 1. Quasar with no challenge period"></a>Change 1. Quasar with no challenge period</h2><p>So we have - a plasma operator that trusts themselves, that they won’t go byzantine and hence, pools in funds on the Quasar.</p>
+<p>Now, this can be expanded to have people collectively pool-in funds for the Quasar pool, instead - which brings in participants to stay engaged with the pool and profits, and mostly to avoid putting up a large sum on the pool by the operator themselves. </p>
+<p>So the trust model changes gradually from -</p>
+<p><strong>Initially:</strong> Nobody trusts anybody.</p>
+<p><strong>With no challenge period:</strong> plasma operator trusts -&gt; plasma operator</p>
+<p><strong>With multiple suppliers pool:</strong> There are 2 choices:</p>
+<ul>
+<li><em>A) With collateral by operator:</em><br>   plasma operator trust -&gt; plasma operator</li>
+<li><em>B) Without collateral by operator:</em><br>    Lenders trust -&gt; plasma operator</li>
+</ul>
+<p>In this variation we will assume and go with B)</p>
+<p>This brings us to:</p>
+<h2 id="Change-2-Quasar-pool-with-multiple-suppliers"><a href="#Change-2-Quasar-pool-with-multiple-suppliers" class="headerlink" title="Change 2. Quasar pool with multiple suppliers"></a>Change 2. Quasar pool with multiple suppliers</h2><p>The structure now looks like this <br><br><br><img src="https://user-images.githubusercontent.com/26090752/112024174-ee391280-8b59-11eb-8406-fa7d7d460e98.jpg" alt="quasar_diagram_with external_pool"></p>
+<p>We can try and make it look similar to Compound (think the Quasar contract is the compound supply pool). The borrowers are the exiters, but the one who repays is - the trusted plasma operator.</p>
+<p>Compound generates returns on the basis of block time. We do it on the basis of the number of exits. </p>
+<h2 id="Returns-calculation"><a href="#Returns-calculation" class="headerlink" title="Returns calculation:"></a>Returns calculation:</h2><p>Every output you send to the Quasar owner on Plasma, you can withdraw<br><code>output_val - quasar_fee</code><br>from the Quasar contract on Ethereum. </p>
+<p>This <code>quasar_fee</code> margin will be distributed among the pool of lenders in the ratio of each lender’s stake.<br>The calculation, we do it in a very similar way to a defi lending protocol, using qTokens.</p>
+<p>Each token supplied to the pool has its exchangeRatio (<code>k</code>).</p>
+<p>When liquidity is supplied to the pool, we mint <code>qOMG = OMG / k</code> for the supplier.</p>
+<p>On withdrawal, qOMG is burnt and <code>OMG = qOMG * k</code> is withdrawn.</p>
+<p>The exchangeRatio (<code>k</code>) determines the returns you get.</p>
+<p>Fees accumulate in the pool every time a fast exit happens, and <code>k</code> updates to<br><code>k’ = f / Tq + k</code></p>
+<p>Where </p>
+<ul>
+<li><code>f</code> &#x3D; fixed quasar_fee from every exit</li>
+<li><code>Tq</code> &#x3D; total qTokens supply</li>
+</ul>
+<!-- Here is a proof for the equation https://github.com/omgnetwork/plasma-contracts/issues/728#issuecomment-760936145 -->
+
+<h4 id="Proof-of-the-equation"><a href="#Proof-of-the-equation" class="headerlink" title="Proof of the equation"></a>Proof of the equation</h4><p>Return rates are dependent on the qtokens and the exchange rate k, for that specific token, at that point of time.<br>Deposits to the pool, for instance OMG will mint qOMG &#x3D; OMG&#x2F;k for the supplier<br>On Withdrawals, qOMG is burnt and OMG &#x3D; qOMG * k is withdrawn.<br>Fees accumulate in the pool every time a fast exit happens, and k updates to<br>    k’ &#x3D; f&#x2F;Tq + k</p>
+<p><img src="https://user-images.githubusercontent.com/26090752/104730150-86cca400-575f-11eb-8c90-13ffe288df78.png" alt="proof1"><img src="https://user-images.githubusercontent.com/26090752/104730170-91873900-575f-11eb-9135-07b6779a7507.png" alt="proof2"><img src="https://user-images.githubusercontent.com/26090752/104730186-9815b080-575f-11eb-8061-5fbe84a9e1ed.png" alt="proof3"><img src="https://user-images.githubusercontent.com/26090752/104730202-9d72fb00-575f-11eb-8302-f11ccfe89b96.png" alt="proof4"></p>
+<!-- Sample run, return calculations
+https://github.com/omgnetwork/brainstorm/tree/main/quasarPool_returns -->
+
+<h3 id="Returns-Per-Exit"><a href="#Returns-Per-Exit" class="headerlink" title="Returns Per Exit"></a>Returns Per Exit</h3><p>Note, the fee has to be distributed for each qToken in the supply of the pool. (the qTokens denote the total supply of the pool)</p>
+<p>So your return per exit &#x3D; no of qTokens you have * fee per qToken</p>
+<p>If there are many lenders to the pool, the fee per qToken would be less<br>If there are small no of lenders, the fee per qToken is more.</p>
+<p>We want the number of qToken in the pool to adjust automatically according to their return requirements.</p>
+<p>When people supply, more qTokens.<br>when people withdraw, less qTokens in supply</p>
+<h3 id="Returns-Per-Week"><a href="#Returns-Per-Week" class="headerlink" title="Returns Per Week"></a>Returns Per Week</h3><p>This gives a better idea of the movement in the pool as this brings the number of exits into the equation.<br>Also, a thing to note is that the returns are compounded.</p>
+<p><code>Returns per week = (quasar_fee per exit * no of exits in the week * no of your qTokens) / qToken total supply  </code></p>
+<p>This means the returns will increase&#x2F;decrease with the increase&#x2F;decrease in the number of exits</p>
+<h3 id="Scenario-1"><a href="#Scenario-1" class="headerlink" title="Scenario 1"></a>Scenario 1</h3><p>When the number of exits increases, pool supply is idle:</p>
+<p>Returns per lender increases, which may attract more lenders to supply,<br>which in turn could again normalise the return to the average rate,</p>
+<p>If new lenders aren’t attracted, the existing suppliers enjoy higher rates.</p>
+<h3 id="Scenario-2"><a href="#Scenario-2" class="headerlink" title="Scenario 2"></a>Scenario 2</h3><p>When the number of exits decreases, pool supply is idle:</p>
+<p>Returns per lenders decrease, which could mean some lenders withdraw from the pool. The ones who stay in the pool enjoy higher returns. This normalises the return rate to average again</p>
+<p>If lenders dont leave, all of them are happy with the lower return rate</p>
+<h3 id="Scenario-3"><a href="#Scenario-3" class="headerlink" title="Scenario 3"></a>Scenario 3</h3><p>When no one supplies to the pool:</p>
+<p>If even one person puts in a supply. He owns all of the qTokenSupply, gets all the returns to himself, which should be quite high.</p>
+<p>This makes it a self-regulating pool, in terms of the need or use of fast exits in the system.</p>
+<p><strong>The idea is that a higher number of fast exits would need a higher liquidity pool size, and scenario 1 shows that this will incentivize people to supply more</strong></p>
+<p><strong>Similarly if there aren’t enough fast exit happening, we are better off with a small pool size(since that would be enough liquidity for a smaller number of exits)</strong></p>
+<p>This sums up the tweaks for the construction, and if you are wondering - yes, this was the first iteration and has been implemented in code. <a target="_blank" rel="noopener" href="https://github.com/omgnetwork/plasma-contracts/tree/master/plasma_framework/contracts/quasar">Find more about the implementation here</a>.</p>
+
+  </div>
+</article>
+<br><br>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-inception-of-a-Quasar-pool"><span class="toc-number">1.</span> <span class="toc-text">The inception of a Quasar pool:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Change-1-Quasar-with-no-challenge-period"><span class="toc-number">2.</span> <span class="toc-text">Change 1. Quasar with no challenge period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Change-2-Quasar-pool-with-multiple-suppliers"><span class="toc-number">3.</span> <span class="toc-text">Change 2. Quasar pool with multiple suppliers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Returns-calculation"><span class="toc-number">4.</span> <span class="toc-text">Returns calculation:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-of-the-equation"><span class="toc-number">4.0.1.</span> <span class="toc-text">Proof of the equation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Returns-Per-Exit"><span class="toc-number">4.1.</span> <span class="toc-text">Returns Per Exit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Returns-Per-Week"><span class="toc-number">4.2.</span> <span class="toc-text">Returns Per Week</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scenario-1"><span class="toc-number">4.3.</span> <span class="toc-text">Scenario 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scenario-2"><span class="toc-number">4.4.</span> <span class="toc-text">Scenario 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scenario-3"><span class="toc-number">4.5.</span> <span class="toc-text">Scenario 3</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2021/03/24/quasar-pool/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&text=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&is_video=false&description=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quasar Pool: Extending Quasar with Liquidity Pools&body=Check out this article: https://souradeep-das.github.io/2021/03/24/quasar-pool/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&title=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2021/03/24/quasar-pool/&name=Quasar Pool: Extending Quasar with Liquidity Pools&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2021/03/24/quasar-pool/&t=Quasar Pool: Extending Quasar with Liquidity Pools"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    Souradeep Das
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

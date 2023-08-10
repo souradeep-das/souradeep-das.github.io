@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VIP Vault (or) Multiple Exit Vaults for Plasma">
+<meta property="og:url" content="https://souradeep-das.github.io/2020/10/15/vip-exit-vault/index.html">
+<meta property="og:site_name" content="Souradeep is typing...">
+<meta property="og:description" content="Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All t">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-14T18:41:09.000Z">
+<meta property="article:modified_time" content="2023-06-30T06:21:12.000Z">
+<meta property="article:author" content="Souradeep Das">
+<meta property="article:tag" content="Layer 2">
+<meta property="article:tag" content="Plasma">
+<meta property="article:tag" content="Research">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon4.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192_4.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon4.png">
+        
+      
+    
+    <!-- title -->
+    
+      <title>Souradeep's Blog: VIP Vault (or) Multiple Exit Vaults for Plasma</title>
+    
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2020/11/03/quasar/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/04/21/stablecoin/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&text=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&is_video=false&description=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=VIP Vault (or) Multiple Exit Vaults for Plasma&body=Check out this article: https://souradeep-das.github.io/2020/10/15/vip-exit-vault/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&name=VIP Vault (or) Multiple Exit Vaults for Plasma&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&t=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-proposal"><span class="toc-number">1.</span> <span class="toc-text">The proposal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure"><span class="toc-number">2.</span> <span class="toc-text">Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limiting-Access"><span class="toc-number">3.</span> <span class="toc-text">Limiting Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce-Exit-Period"><span class="toc-number">4.</span> <span class="toc-text">Reduce Exit Period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discarded-Ideas"><span class="toc-number">5.</span> <span class="toc-text">Discarded Ideas</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    <!-- 
+    <h1 class="posttitle p-name" itemprop="name headline">
+        VIP Vault (or) Multiple Exit Vaults for Plasma
+    </h1>
+
+
+ -->
+    <!-- just remove the below if not needed -->
+    
+    
+    
+    
+    
+    <h1 class="posttitle">
+      VIP Vault (or) Multiple Exit Vaults for Plasma
+      
+    </h1>
+    
+    
+
+    <div class="meta">
+      <!-- <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Souradeep Das</span>
+      </span> -->
+      
+    <div class="postdate">
+      
+        <time datetime="2020-10-14T18:41:09.000Z" class="dt-published" itemprop="datePublished">2020-10-15</time>
+        
+      
+    </div>
+
+
+      <span class="reading-time">
+      <i class="fa-regular fa-clock"></i>
+      7 minute read
+      </span>
+      
+
+      <!-- 
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Layer-2/" rel="tag">Layer 2</a>, <a class="p-category" href="/tags/Plasma/" rel="tag">Plasma</a>, <a class="p-category" href="/tags/Research/" rel="tag">Research</a>
+    </div>
+ -->
+
+
+    <div class="article-tag">
+      <i class="fa-solid fa-tag"></i>
+      
+        <a href="/tags/Layer-2/">#Layer 2</a>
+        
+          ,
+        
+      
+        <a href="/tags/Plasma/">#Plasma</a>
+        
+          ,
+        
+      
+        <a href="/tags/Research/">#Research</a>
+        
+      
+    </div>
+  
+  
+  
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <!-- # VIP Vault (or) Multiple Exit Vaults -->
+<p>Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All transactions on the chch are secured as per the consensus of the underlying layer - Ethereum, and a unique Exit Game design construct ensures funds are always protected from any third party-intervention or manipulation by the chch operator. </p>
+<p>Part of this exit game design is the crucial component - “withdrawal period”. When users wish to withdraw funds from the Plasma chch, they initiate an exit process, wherein the process includes a time-based challenge period, set to 7 days. During this period, other participants of the network can challenge the validity of the exits by submitting a proof. If no challenges are raised within the timeframe, the exit is considered valid, allowing funds to be safely transferred back to the Ethereum mainnet. Hence, the withdrawal period of 7 days enables to protect the integrity of the L2 by disallowing any faulty withdrawals, with the assumption that 7 days is enough time for a fellow participant to react and submit a proof.</p>
+<p>While the 7 day withdrawal period is of the utmost necessity, the same can be perceived as a potential limitation for users who want quick access to funds. That a user would wait 7 days for obtaining their funds when they move from L2&gt;L1 is an unrealistic expecation, and so, a solution in this regard is of the highest order to make Layer2’s synonymous with the ecosystem.</p>
+<p>The following article is a proposal to solve the withdrawal problem, or propose a fast withdrawal method. This proposal has been written in the context of the MoreVp implementation of Plasma (OmiseGo), but can be freely applied to any other implentation or even a L2 with similar attributes.</p>
+<h2 id="The-proposal"><a href="#The-proposal" class="headerlink" title="The proposal"></a>The proposal</h2><p>This is an approach to have a separate Vault + Exit Game with lower exit period which acts as an extension to the existing network. The main idea however, could be to have several of these Vaults that enable the possibility of having assets(utxo) which are exitable at different exit periods.</p>
+<p>The main objectives of the VIP Vault are-</p>
+<ul>
+<li>Reduce Exit Period</li>
+</ul>
+<p>which in turn would require reducing the UTXO throughput, and making the vault exclusive by</p>
+<ul>
+<li>Limiting Access(entry barrier) and&#x2F;or incentivizing efficient output creations</li>
+</ul>
+<h2 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h2><p>The VIP Vault can be looked as a bucket within the existing framework and would require adding a vault with a new TxType and Registering an Exit Game for the TxType. </p>
+<p>Assume- <br>VaultId 3 <br>supports TxType 3,4 <br>which supports spending, OutputType 3,4</p>
+<p>Vault-3 has a lower exit-period and hence, a decoupling is necessary where the exit period is bound to the exit game for Txtype 3,4.<br>Depositing to the new vault will generate outputs of type 3 on the childchain. These outputs will be spendable through the Tx type 3. Note that an ETH output on Vault-1 is not the same as an ETH output on Vault-3, though they represent the same asset. TxType 3 uses the new exit game to exit.<br>Ideally, multiple Vaults with their own exit game independently exist while all the transactions are included in the same chch by the operator.</p>
+<p>The prominent reason why someone with adequate funds would deposit in the vault would be to take advantage of fast withdrawing the remaining funds after doing transactions. Someone who would want to provide fast exitable outputs to other users should also find the Vault useful.</p>
+<h2 id="Limiting-Access"><a href="#Limiting-Access" class="headerlink" title="Limiting Access"></a>Limiting Access</h2><p>Limiting access for the vault is necessary to keep the number of UTXOs low and -</p>
+<ol>
+<li>make sure there is enough time to challenge invalid exits</li>
+<li>make sure there is enough time for everyone to exit in a mass-exit scenario</li>
+</ol>
+<p>Potential ways to reduce number of UTXOs-</p>
+<ol>
+<li><p>Have a lower bound on the deposit amount to the vault. this would only allow certain VIP rollers to access the vault and get their fast-exitable outputs. But the UTXOs can still be broken to several other UTXOs, while this is a good method to limit access, there is still possibility of having UTXOs cross the limit</p>
+</li>
+<li><p>Have a lower bound on the size of UTXO for the vault. The outputs from the Tx should each be higher than the minimum value. For example, if the lower bound is 5 ETH, an output of size 50 ETH can maximally be split into 10 UTXOs and no further.</p>
+</li>
+<li><p>Have at least one output from a tx to be of a certain minimum value. Though this could still result in number of UTXOs crossing limit, it is still safer than the first method.</p>
+</li>
+</ol>
+<p>Additionally,</p>
+<ol start="4">
+<li>Have dynamic fee for Tx similar to BTC, where the fee is dependent on the number of outputs. Making it cheaper to send 1 ETH in 1 UTXO than splitting it up into 10 UTXOs of 0.1 ETH each.</li>
+</ol>
+<h2 id="Reduce-Exit-Period"><a href="#Reduce-Exit-Period" class="headerlink" title="Reduce Exit Period"></a>Reduce Exit Period</h2><p>The exit period being the max of- <br>startExitTime + MFP <br>utxoCreationTime + MFP + REP</p>
+<p>While we may not want to decrease REP too much, giving users time to react in a mass-exit scenario. A suitable time period can be caculated from the approximate expectations about the number of UTXOs for the vault</p>
+<p>Approximately, <br>Time &#x3D; (0.5 * N) &#x2F; f</p>
+<p>N &#x3D; number of UTXOs <br>f &#x3D; Fraction of a Block available</p>
+<p>Reducing MFP, however should be better given there is a cap on the number of UTXOs and the watcher validates every MFP&#x2F;2</p>
+<p>Case 1 <br>MFP is reduced to 4 days. REP is 7 days. <br>Outputs older than a week can exit within 4 days. Newer Outputs exit in 11 days from their creation. In case of mass exits users have 7 days to exit.<br>Watcher validates every 2 days.</p>
+<p>Case 2 <br>MFP is reduced to 4 days. REP is 3 days. <br>Outputs older than 3 days can exit within 4 days. Newer ouput exit in 7 days from their creation. In case of mass exits user have 3 days to exit.</p>
+<h2 id="Discarded-Ideas"><a href="#Discarded-Ideas" class="headerlink" title="Discarded Ideas"></a>Discarded Ideas</h2><p>Allow optional exits through contract, since outputs sent to a contract cannot be double spent. <br>Reason: This will not be protected against operator double spends or operator selective withholding tx to the contract. The Operator can also exit an invalid tx using the contract.</p>
+
+  </div>
+</article>
+<br><br>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-proposal"><span class="toc-number">1.</span> <span class="toc-text">The proposal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Structure"><span class="toc-number">2.</span> <span class="toc-text">Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Limiting-Access"><span class="toc-number">3.</span> <span class="toc-text">Limiting Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reduce-Exit-Period"><span class="toc-number">4.</span> <span class="toc-text">Reduce Exit Period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Discarded-Ideas"><span class="toc-number">5.</span> <span class="toc-text">Discarded Ideas</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&text=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&is_video=false&description=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=VIP Vault (or) Multiple Exit Vaults for Plasma&body=Check out this article: https://souradeep-das.github.io/2020/10/15/vip-exit-vault/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&title=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&name=VIP Vault (or) Multiple Exit Vaults for Plasma&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2020/10/15/vip-exit-vault/&t=VIP Vault (or) Multiple Exit Vaults for Plasma"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    Souradeep Das
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

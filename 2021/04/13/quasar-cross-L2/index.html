@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="With regards to enhancing the experience of using Plasma, entry and exit are two things that often come up to be a barrier for usability. Ideally, both entry and exit should be time and cost effective">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quasar for Interoperable Cross-L2 Fast Exits">
+<meta property="og:url" content="https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/index.html">
+<meta property="og:site_name" content="Souradeep is typing...">
+<meta property="og:description" content="With regards to enhancing the experience of using Plasma, entry and exit are two things that often come up to be a barrier for usability. Ideally, both entry and exit should be time and cost effective">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-13T11:54:00.000Z">
+<meta property="article:modified_time" content="2023-08-10T08:18:20.197Z">
+<meta property="article:author" content="Souradeep Das">
+<meta property="article:tag" content="Layer 2">
+<meta property="article:tag" content="Plasma">
+<meta property="article:tag" content="Research">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon4.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192_4.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon4.png">
+        
+      
+    
+    <!-- title -->
+    
+      <title>Souradeep's Blog: Quasar for Interoperable Cross-L2 Fast Exits</title>
+    
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/09/28/parallel-exec/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2021/03/24/quasar-pool/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&text=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&is_video=false&description=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quasar for Interoperable Cross-L2 Fast Exits&body=Check out this article: https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&name=Quasar for Interoperable Cross-L2 Fast Exits&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&t=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Direct-exits-to-a-L2-Optimsim"><span class="toc-number">1.</span> <span class="toc-text">Section - Direct exits to a L2 (Optimsim)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process"><span class="toc-number">2.</span> <span class="toc-text">The Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Vectors"><span class="toc-number">2.1.</span> <span class="toc-text">Additional Vectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claim-methods"><span class="toc-number">2.2.</span> <span class="toc-text">Claim methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Potential-optimizations"><span class="toc-number">2.3.</span> <span class="toc-text">Potential optimizations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Exits-via-hopping-through-Ethereum"><span class="toc-number">3.</span> <span class="toc-text">Section - Exits via hopping through Ethereum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Process-1"><span class="toc-number">3.1.</span> <span class="toc-text">The Process</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    <!-- 
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Quasar for Interoperable Cross-L2 Fast Exits
+    </h1>
+
+
+ -->
+    <!-- just remove the below if not needed -->
+    
+    
+    
+    
+    
+    <h1 class="posttitle">
+      Quasar for Interoperable Cross-L2 Fast Exits
+      
+    </h1>
+    
+    
+
+    <div class="meta">
+      <!-- <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Souradeep Das</span>
+      </span> -->
+      
+    <div class="postdate">
+      
+        <time datetime="2021-04-13T11:54:00.000Z" class="dt-published" itemprop="datePublished">2021-04-13</time>
+        
+      
+    </div>
+
+
+      <span class="reading-time">
+      <i class="fa-regular fa-clock"></i>
+      8 minute read
+      </span>
+      
+
+      <!-- 
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Layer-2/" rel="tag">Layer 2</a>, <a class="p-category" href="/tags/Plasma/" rel="tag">Plasma</a>, <a class="p-category" href="/tags/Research/" rel="tag">Research</a>
+    </div>
+ -->
+
+
+    <div class="article-tag">
+      <i class="fa-solid fa-tag"></i>
+      
+        <a href="/tags/Layer-2/">#Layer 2</a>
+        
+          ,
+        
+      
+        <a href="/tags/Plasma/">#Plasma</a>
+        
+          ,
+        
+      
+        <a href="/tags/Research/">#Research</a>
+        
+      
+    </div>
+  
+  
+  
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>With regards to enhancing the experience of using Plasma, entry and exit are two things that often come up to be a barrier for usability. Ideally, both entry and exit should be time and cost effective.<br>While, entries (deposits) are fast, but not as cheap (which probably is a topic for later), exits are neither.<br>The <a href="quasar.md">Quasar</a> attempts to solve this by allowing fast exits off Plasma, which still isn’t very cheap because of the Ethereum transactions and the gas costs associated with them.</p>
+<h2 id="Section-Direct-exits-to-a-L2-Optimsim"><a href="#Section-Direct-exits-to-a-L2-Optimsim" class="headerlink" title="Section - Direct exits to a L2 (Optimsim)"></a>Section - Direct exits to a L2 (Optimsim)</h2><p>This is an attempt to enforce a way where the Quasar could allow Fast Exits onto a different L2, potentially without touching Ethereum, and removing the gas costs hence, from the equation.</p>
+<h2 id="The-Process"><a href="#The-Process" class="headerlink" title="The Process"></a>The Process</h2><p>To do this, out of sheer exuberance and fascination for the Hubble spotting a Double Quasar recently, we try and split our Quasar into two as well!</p>
+<ol>
+<li>L2Quasar - rests on Optimism - the main contract, that someone interacts with, holds the storage and the quasar pool</li>
+<li>L1QuasarScope - rests on Ethereum - the contract that is used only when required, whose job is to verify and call a method from L2Quasar</li>
+</ol>
+<p>The Quasar gives out liquid funds after verifying transaction inclusion proofs, which directly needs the block roots commited to Plasma contract on L1. A contract on L2, which is meant to be the Quasar cannot read these roots, hence the need of the L1QuasarScope contrat that is on L1 and verifies before triggerring the appropriate method on L2Quasar.</p>
+<p>The UX is still the same-</p>
+<ol>
+<li>Quasar owner loads up the L2Quasar contract with ETH</li>
+<li>Alice, who wants to fast exit onto Optimism, obtains a ticket on L2Quasar, providing the UtxoPos and the amount to reserve.<blockquote>
+<p><em><strong>point of difference</strong></em><br>Additional details like Tx and inclusion proof are not provided in this step. The first iteration of quasar used the tx and proof to extract value of output and to verify Alice owned this UTXO, but doesn’t confirm if she hasn’t spent it.<br>Though, this was a good way to stop people from bothering others UTXOs, we can’t do this since we don’t have access to Plasma block roots on L2. So we go without it, asking Alice to specify both the utxoPos and reserved amount (probably increasing the bond size a bit more)</p>
+</blockquote>
+</li>
+<li>Alice spends the Utxo in a tx to the Quasar owner on Plasma</li>
+<li>Now, the Quasar owner verifies off-chain that Alice has spent the utxo with the ticket correctly in a tx to the quasar owner and takes the authority to call the <code>L2Claim</code> method on L2Quasar which would redeem the ticket and transfer equivalent amount to Alice from the L2Quasar Pool.</li>
+<li>However, if the Quasar owner doesn’t send the funds to Alice, in other words, doesn’t call the <code>L2Claim</code> method for Alice’s Utxo,  the L2Quasar would still have the ticket active and unclaimed. And, only then Alice would have to use the <code>L1Claim</code> from L1QuasarScope which verifies and triggers the L2Quasar contract to send her funds. Alice would provide the Utxo, spending Tx and the inclusion proof to <code>L1Claim</code>. The L1QuasarScope verifies this Tx was correctly formed, valid and calls the L2Quasar through a bridge contract to send Alice her funds and mark her ticket as claimed.</li>
+</ol>
+<h3 id="Additional-Vectors"><a href="#Additional-Vectors" class="headerlink" title="Additional Vectors"></a>Additional Vectors</h3><ul>
+<li>Ideally Alice wouldn’t have to use the L1QuasarScope contract. The UX is step 2-4. Step 5 is required only when Quasar owner acts malicious. Since there is no advantage for acting malicious here, step 5 is unused. </li>
+<li>The utxoPos and the amount reserved should be correctly specified by Alice while obtaining ticket. If Alice gives out a false reserved amount, the ticket cannot be correctly claimed by Alice(if needed) and the quasar owner will have no obligation to send Alice her funds.</li>
+<li>The IFEClaims and ClaimChallenges can be used in the same way, calling the L1QuasarScope where the proofs are verified and calls L2Quasar that updates the state. </li>
+<li>ProcessClaims, withdrawing unclaimed bonds can all be done throught the L2Quasar. The L1QuasarScope comes in whenever there is a conflict and a proof has to be verified.</li>
+<li>Optimism’s cross-domain message is used to call L2Quasar from L1QuasarScope</li>
+<li>Quasar owner&#x2F;maintainer can be used inter-changeably here, the maintainer can be given the tasks and the owner a sole address for receiving.</li>
+</ul>
+<p>Since, for the happy path the transactions happens over L2Quasar, this allows to avoid the gas fees on Ethereum, and makes these exits cheap.</p>
+<h3 id="Claim-methods"><a href="#Claim-methods" class="headerlink" title="Claim methods"></a>Claim methods</h3><p>The <code>L2Claim</code> method-</p>
+<ul>
+<li>to be called only by the Quasar owner</li>
+<li>transfers funds to Alice</li>
+<li>mark ticket as claimed</li>
+</ul>
+<p>(or)</p>
+<p>The <code>L1Claim</code> method-</p>
+<ul>
+<li>to be called by Alice</li>
+<li>provided with Utxo to spend, Tx, proofs</li>
+<li>after verification on L1, calls L2Quasar through bridge</li>
+<li>L2Quasar transfers funds to Alice</li>
+<li>mark ticket as claimed</li>
+</ul>
+<h3 id="Potential-optimizations"><a href="#Potential-optimizations" class="headerlink" title="Potential optimizations"></a>Potential optimizations</h3><ul>
+<li>The automatic safe blocknum logic does not work here, since the L2Quasar doesn’t have access to the Plasma blocks.<br>We might have to consider the manual safe blocknum update by the maintainer, or a time based update. a positive point, is the regular safe blocknum updates are not tx on ethereum (saving some cost).</li>
+<li>Someone who wants to fast exit must have eth on optimism to pay for calling the obtainTicket method.<br>Since, the obtainTicket can be called by any one (not limiting to someone owning the UTXO), there could exist relayers who could call obtain tickets on behalf</li>
+</ul>
+<h2 id="Section-Exits-via-hopping-through-Ethereum"><a href="#Section-Exits-via-hopping-through-Ethereum" class="headerlink" title="Section - Exits via hopping through Ethereum"></a>Section - Exits via hopping through Ethereum</h2><p>L2s on Ethereum function by depositing assets on L1 which provides the equivalent assets on L2 (a deposit).<br>The idea is to use the deposit method with a quasar to provide choice of endpoints to receive thier liquid funds. Instead of giving the funds over Eth, the quasar  would call the deposits to these other L2s on claiming.<br>This specifically can be a way to Fast Exit on a L2 which doesn’t have a L1 -&gt; L2 bridge. (for eg. xDAI, Loopring)<br>Which, however requires Ethereum Transactions and hence gas fees, only saving one transaction if you are willing to switch L2s.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">changing,</span><br><span class="line">Process Exit on Plasma -&gt; funds on Eth -&gt; Deposit on other L2</span><br><span class="line"></span><br><span class="line">into</span><br><span class="line">Claim/Process Fast Exit -&gt; Deposit on other L2</span><br></pre></td></tr></table></figure>
+
+<h3 id="The-Process-1"><a href="#The-Process-1" class="headerlink" title="The Process"></a>The Process</h3><ul>
+<li><p>Requires the deposit method of the L2 contracts on Ethereum to allow specifying - the recipient&#x2F;from account. i.e. Depositing to the Layer 2 on someone’s behalf should be possible. </p>
+</li>
+<li><p>The Quasar is exactly the same as the original quasar design, The only difference will be in the way the liquid funds are given out. Contrary to the original quasar design, the way to retrieve the liquid funds depends on the person calling claim() where he specifies the form in which he wants to get the liquid funds. For ex 1-&gt; ETH, 2-&gt; xDAI 3-&gt; Loopring.</p>
+</li>
+</ul>
+
+  </div>
+</article>
+<br><br>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Direct-exits-to-a-L2-Optimsim"><span class="toc-number">1.</span> <span class="toc-text">Section - Direct exits to a L2 (Optimsim)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process"><span class="toc-number">2.</span> <span class="toc-text">The Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Vectors"><span class="toc-number">2.1.</span> <span class="toc-text">Additional Vectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claim-methods"><span class="toc-number">2.2.</span> <span class="toc-text">Claim methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Potential-optimizations"><span class="toc-number">2.3.</span> <span class="toc-text">Potential optimizations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Exits-via-hopping-through-Ethereum"><span class="toc-number">3.</span> <span class="toc-text">Section - Exits via hopping through Ethereum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Process-1"><span class="toc-number">3.1.</span> <span class="toc-text">The Process</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&text=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&is_video=false&description=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quasar for Interoperable Cross-L2 Fast Exits&body=Check out this article: https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&title=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&name=Quasar for Interoperable Cross-L2 Fast Exits&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2021/04/13/quasar-cross-L2/&t=Quasar for Interoperable Cross-L2 Fast Exits"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    Souradeep Das
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

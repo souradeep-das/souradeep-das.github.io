@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Implementation: https:&#x2F;&#x2F;github.com&#x2F;omgnetwork&#x2F;plasma-contracts&#x2F;tree&#x2F;master&#x2F;plasma_framework&#x2F;contracts&#x2F;quasar &quot;Plasma is one of the earliest and among the most popular L2 scaling solutions in Eth">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quasar Fast Withdrawals: Instant Trustless Exits on Plasma">
+<meta property="og:url" content="https://souradeep-das.github.io/2020/11/03/quasar/index.html">
+<meta property="og:site_name" content="Souradeep is typing...">
+<meta property="og:description" content="Implementation: https:&#x2F;&#x2F;github.com&#x2F;omgnetwork&#x2F;plasma-contracts&#x2F;tree&#x2F;master&#x2F;plasma_framework&#x2F;contracts&#x2F;quasar &quot;Plasma is one of the earliest and among the most popular L2 scaling solutions in Eth">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-03T10:30:00.000Z">
+<meta property="article:modified_time" content="2023-08-10T08:04:52.496Z">
+<meta property="article:author" content="Souradeep Das">
+<meta property="article:tag" content="Layer 2">
+<meta property="article:tag" content="Plasma">
+<meta property="article:tag" content="Research">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon4.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192_4.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon4.png">
+        
+      
+    
+    <!-- title -->
+    
+      <title>Souradeep's Blog: Quasar Fast Withdrawals: Instant Trustless Exits on Plasma</title>
+    
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QC12K4X65N"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-QC12K4X65N');
+  </script>
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2021/03/24/quasar-pool/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2020/10/15/vip-exit-vault/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2020/11/03/quasar/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2020/11/03/quasar/&text=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2020/11/03/quasar/&is_video=false&description=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma&body=Check out this article: https://souradeep-das.github.io/2020/11/03/quasar/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2020/11/03/quasar/&name=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2020/11/03/quasar/&t=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overview"><span class="toc-number">1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process-in-Detail"><span class="toc-number">2.</span> <span class="toc-text">The Process in Detail</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setting-Up"><span class="toc-number">2.1.</span> <span class="toc-text">Setting Up</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-and-Withdrawing"><span class="toc-number">2.2.</span> <span class="toc-text">Using and Withdrawing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maintainance"><span class="toc-number">2.3.</span> <span class="toc-text">Maintainance</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mandatory-Actions"><span class="toc-number">2.3.1.</span> <span class="toc-text">Mandatory Actions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Byzantine-State"><span class="toc-number">3.</span> <span class="toc-text">Byzantine State</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Freeze-during-Byzantine-State"><span class="toc-number">3.1.</span> <span class="toc-text">Freeze during Byzantine State</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IFE-Claims"><span class="toc-number">3.2.</span> <span class="toc-text">IFE-Claims</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Possible-Incentives-for-the-Owner"><span class="toc-number">4.</span> <span class="toc-text">Possible Incentives for the Owner</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fees-for-normal-fast-exits"><span class="toc-number">4.1.</span> <span class="toc-text">Fees for normal fast exits</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fees-for-IFE-Claim"><span class="toc-number">4.2.</span> <span class="toc-text">Fees for IFE-Claim</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Potential-Attacks-and-their-Mitigations"><span class="toc-number">5.</span> <span class="toc-text">Potential Attacks and their Mitigations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attacks-by-Alice"><span class="toc-number">5.1.</span> <span class="toc-text">Attacks by Alice</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DoS-tickets"><span class="toc-number">5.1.1.</span> <span class="toc-text">DoS tickets</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ticket-for-a-fake-UTXO"><span class="toc-number">5.1.2.</span> <span class="toc-text">Ticket for a fake UTXO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Alice-attempts-to-exit-from-the-UTXO-after-submitting-the-claim"><span class="toc-number">5.1.3.</span> <span class="toc-text">Alice attempts to exit from the UTXO after submitting the claim</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Alice-uses-the-inclusion-proofs-of-same-UTXO-twice"><span class="toc-number">5.1.4.</span> <span class="toc-text">Alice uses the inclusion proofs of same UTXO twice</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attacks-by-the-Quasar-owner"><span class="toc-number">5.2.</span> <span class="toc-text">Attacks by the Quasar owner</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Owner-races-to-empty-liquid-funds"><span class="toc-number">5.2.1.</span> <span class="toc-text">Owner races to empty liquid funds</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Owner-retracts-liquid-funds-from-contract"><span class="toc-number">5.2.2.</span> <span class="toc-text">Owner retracts liquid funds from contract</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attacks-by-the-Operator"><span class="toc-number">5.3.</span> <span class="toc-text">Attacks by the Operator</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-publishes-invalid-block"><span class="toc-number">5.3.1.</span> <span class="toc-text">Operator publishes invalid block</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#After-Operator-goes-Byzantine"><span class="toc-number">5.3.2.</span> <span class="toc-text">After Operator goes Byzantine</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-doesn%E2%80%99t-include-Alice%E2%80%99s-transaction-to-Owner"><span class="toc-number">5.3.3.</span> <span class="toc-text">Operator doesn’t include Alice’s transaction to Owner</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-allows-a-double-spend-transaction-of-Alice"><span class="toc-number">5.3.4.</span> <span class="toc-text">Operator allows a double-spend transaction of Alice</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Alternative-Modifications-to-the-approach"><span class="toc-number">6.</span> <span class="toc-text">Alternative Modifications to the approach</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Single-Liquidity-Pool"><span class="toc-number">6.1.</span> <span class="toc-text">Single Liquidity Pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Automating-maintainance-of-the-Safe-Blocknum-upper-bound"><span class="toc-number">6.2.</span> <span class="toc-text">Automating maintainance of the Safe Blocknum upper-bound</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-funds-in-different-form"><span class="toc-number">6.3.</span> <span class="toc-text">Output funds in different form</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    <!-- 
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Quasar Fast Withdrawals: Instant Trustless Exits on Plasma
+    </h1>
+
+
+ -->
+    <!-- just remove the below if not needed -->
+    
+    
+    
+    
+    
+    <h1 class="posttitle">
+      Quasar Fast Withdrawals:
+      
+        <br>
+        <span class="subheading"><em>Instant Trustless Exits on Plasma</em></span>
+      
+    </h1>
+    
+    
+
+    <div class="meta">
+      <!-- <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Souradeep Das</span>
+      </span> -->
+      
+    <div class="postdate">
+      
+        <time datetime="2020-11-03T10:30:00.000Z" class="dt-published" itemprop="datePublished">2020-11-03</time>
+        
+      
+    </div>
+
+
+      <span class="reading-time">
+      <i class="fa-regular fa-clock"></i>
+      18 minute read
+      </span>
+      
+
+      <!-- 
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Layer-2/" rel="tag">Layer 2</a>, <a class="p-category" href="/tags/Plasma/" rel="tag">Plasma</a>, <a class="p-category" href="/tags/Research/" rel="tag">Research</a>
+    </div>
+ -->
+
+
+    <div class="article-tag">
+      <i class="fa-solid fa-tag"></i>
+      
+        <a href="/tags/Layer-2/">#Layer 2</a>
+        
+          ,
+        
+      
+        <a href="/tags/Plasma/">#Plasma</a>
+        
+          ,
+        
+      
+        <a href="/tags/Research/">#Research</a>
+        
+      
+    </div>
+  
+  
+  
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <!-- Design: https://github.com/omgnetwork/plasma-contracts/blob/master/plasma_framework/docs/quasar/quasar-fast-withdrawals.md \ -->
+<p><strong>Implementation:</strong> <a target="_blank" rel="noopener" href="https://github.com/omgnetwork/plasma-contracts/tree/master/plasma_framework/contracts/quasar">https://github.com/omgnetwork/plasma-contracts/tree/master/plasma_framework/contracts/quasar</a></p>
+<p><strong>&quot;</strong>Plasma is one of the earliest and among the most popular L2 scaling solutions in Ethereum. Plasma scales Ethereum by moving transactions to a UTXO based “child-chain” (chch) on top of Ethereum. All transactions on the chch are secured as per the consensus of the underlying layer - Ethereum, and a unique Exit Game design construct ensures funds are always protected from any third party-intervention or manipulation by the chch operator. </p>
+<p>Part of this exit game design is the crucial component - “withdrawal period”. When users wish to withdraw funds from the Plasma chch, they initiate an exit process, wherein the process includes a time-based challenge period, set to 7 days. During this period, other participants of the network can challenge the validity of the exits by submitting a proof. If no challenges are raised within the timeframe, the exit is considered valid, allowing funds to be safely transferred back to the Ethereum mainnet. Hence, the withdrawal period of 7 days enables to protect the integrity of the L2 by disallowing any faulty withdrawals, with the assumption that 7 days is enough time for a fellow participant to react and submit a proof.</p>
+<p>While the 7 day withdrawal period is of the utmost necessity, the same can be perceived as a potential limitation for users who want quick access to funds. That a user would wait 7 days for obtaining their funds when they move from L2&gt;L1 is an unrealistic expecation, and so, a solution in this regard is of the highest order to make Layer2’s synonymous with the ecosystem.<strong>&quot;</strong></p>
+<p>This is an attempt to reduce the time needed to move funds from a Layer 2 to Layer 1 to &lt;&#x3D; 24 hrs. (The L2 in context is Plasma or an equivalent L2 without smart contracts)<br>This construction is a trustless way to exchange funds using a Layer 1 smart contract, which would enable almost anyone (i.e. not only limited to token-issuers or partners) to provide the service for incentives. The approach also pushes for bringing the liquidity providers to the exiters, hence eliminating the requirement of a token market.</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Exchanging&#x2F;Swapping assets is done with the help of transaction inclusion proofs</p>
+<p>To put it briefly, the UX for Alice, who has PETH (ETH on Plasma Layer 2) and wants Layer 1 ETH is:</p>
+<ul>
+<li>Alice confirms the UTXO which she wants to exit (obtains a ticket from the Layer 1 contract)</li>
+<li>Alice spends the UTXO in a Layer 2 transaction to the address of the Layer 1 contract owner</li>
+<li>Then she waits for the transaction confirmation, provides inclusion proof to the contract and claims the funds on Layer 1</li>
+</ul>
+<p>Alice would pay a fee to the Layer 1 contract owner instead of bearing the gas cost for exiting the UTXO</p>
+<h2 id="The-Process-in-Detail"><a href="#The-Process-in-Detail" class="headerlink" title="The Process in Detail"></a>The Process in Detail</h2><p>The Layer 1 contract is the main component which enables the trustless asset exchange. </p>
+<p>The contract has to be setup by the owner using certain parameters to tweak its behaviour. So let’s call this setup a Quasar for now. Ideally, there will be multiple Quasars in the network, each of which provide a method for fast withdrawals with different properties such as waiting period or fee.</p>
+<h3 id="Setting-Up"><a href="#Setting-Up" class="headerlink" title="Setting Up"></a>Setting Up</h3><p>Anyone can set up a Quasar, for any definite period of time and with whatever amount of liquidity.<br>The steps-</p>
+<ol>
+<li><p>Deploy the contract, setting the following attributes</p>
+<ul>
+<li>The Owner - the account which will receive the funds on Plasma; should be a fresh account with no history of incoming transactions.</li>
+<li>Safe blocknum (upper-bound) - This is the latest decided safe block by the owner; to acknowledge tickets for UTXOs from this or older blocks; see <a href="#After-Operator-goes-Byzantine">reason</a></li>
+<li>Waiting period - the time to wait from the contract receiving inclusion proofs to providing liquid funds; to protect against operator + user collusion only; see <a href="#Operator-allows-a-double-spend-transaction-of-Alice">reason</a></li>
+</ul>
+</li>
+<li><p>Load the contract with Layer 1 funds for liquidity.</p>
+</li>
+</ol>
+<h3 id="Using-and-Withdrawing"><a href="#Using-and-Withdrawing" class="headerlink" title="Using and Withdrawing"></a>Using and Withdrawing</h3><p>Alice has some PETH, this is the process she has to go through in order to get liquid funds instantly:</p>
+<ol>
+<li>Alice takes a note of the UTXO that she wants to exit. She has options to select any Quasar out there, comparing the waiting period and the safe blocknum upper-bounds for each of them.</li>
+<li>Alice obtains a ticket from one of these Quasars, specifying her UTXO. The intention of the ticket is to reserve the amount from the contract. The ticket is valid for a certain period of time and can only be obtained for UTXOs which are within limits of the specified blocknum upper-bound; see <a href="#Owner-races-to-empty-liquid-funds">reason</a></li>
+<li>After successfully obtaining the ticket, Alice spends the UTXO in a transaction to the Owner. The transaction should only include inputs owned by Alice; see <a href="#IFE-Claims">reason</a></li>
+<li>After the transaction is confirmed, Alice submits a claim to the Quasar with the inclusion proof of the transaction.</li>
+<li>The claim gets added to the Quasar’s queue with a very short waiting period. The waiting period gives the Quasar Owner an opportunity to challenge in case the Operator colludes with Alice</li>
+<li>After the waiting period passes, upon executing the queue the contract sends rootchain funds to Alice</li>
+</ol>
+<h3 id="Maintainance"><a href="#Maintainance" class="headerlink" title="Maintainance"></a>Maintainance</h3><p>The Owner needs to maintain the Quasar contract from time-to-time in the following ways-</p>
+<ul>
+<li>The Owner has to update the safe blocknum upper-bound in intervals. This is totally dependent on the owner and in an ideal situation of multiple quasar options, even newer Utxos should be able to find one.</li>
+<li>The waiting period can be freely set by the Owner. Since the waiting period is only useful in the rare case of the operator submitting invalid blocks(containing a double spent transaction), the period can be set to even lower than 24hrs, or can even be removed completely if Owner trusts the operator.</li>
+<li>The Owner can periodically exit funds from plasma and use them to refill the Quasar’s liquidity pool.</li>
+<li>The Owner can choose to empty the liquidity pool. To retract funds the owner should first freeze the contract which would stop giving away new tickets. The active tickets are still valid, and the remaining portion of liquid funds not covered by the tickets can be removed.</li>
+</ul>
+<h4 id="Mandatory-Actions"><a href="#Mandatory-Actions" class="headerlink" title="Mandatory Actions"></a>Mandatory Actions</h4><p>The Owner needs to necessarily -</p>
+<ul>
+<li>Challenge Claims - Challenge usual fast exit claim within the waiting period from the time of the claim</li>
+<li>Challenge IFE-Claim - Challenge <a href="#IFE-Claims">IFE-Claims</a> within 7+x days (IFE finalization + buffer) from the time of the claim</li>
+</ul>
+<h2 id="Byzantine-State"><a href="#Byzantine-State" class="headerlink" title="Byzantine State"></a>Byzantine State</h2><p>The childchain is considered ‘byzantine’ if the operator performs an invalid action, such as submitting an invalid block. Normally this results in a mass exit i.e. everyone should exit their funds back to Layer 1.</p>
+<h3 id="Freeze-during-Byzantine-State"><a href="#Freeze-during-Byzantine-State" class="headerlink" title="Freeze during Byzantine State"></a>Freeze during Byzantine State</h3><p>If the current state is determined to be Byzantine, the Owner should</p>
+<ol>
+<li>Avoid updating the Safe Blocknum upper-bound.</li>
+<li>Freeze the contract to stop giving away new tickets.</li>
+</ol>
+<p>The existing active tickets however are valid and IFE-Claims can be used to recover these funds.</p>
+<p>Note that freezing the contract has to be done within the Required Exit Period (<a href="#automating-maintainance-of-the-safe-blocknum-upper-bound">unless automatic safe block is set</a>), hence time-limited to one-week, but should be done sooner by the Owner to reduce the hassle.</p>
+<h3 id="IFE-Claims"><a href="#IFE-Claims" class="headerlink" title="IFE-Claims"></a>IFE-Claims</h3><p>In the case that the operator doesn’t include Alice’s transaction in a block or is even withholding entire blocks, Alice won’t have the transaction inclusion proof to claim funds in the usual way from the Quasar. Similar to the MoreVP in-flight exit game, an IFE-Claim is the way to recover funds:</p>
+<ol>
+<li>Alice starts an IFE on the transaction to the Quasar. Note that an IFE has to be started before starting an IFE-claim, since starting an IFE on the transaction also proves it to be exitable.</li>
+<li>Alice calls the IFEClaim method on the Quasar contract</li>
+<li>Alice should not try to double spend the input that was spent with the transaction to ensure the transaction is always canonical</li>
+<li>The Quasar owner has to Piggyback the output of this transaction</li>
+<li>The IFE-claim on the Quasar here has a higher waiting period here (buffer + IFE finalization time) in order to have enough time to challenge if it is an invalid claim</li>
+<li>The Quasar Owner gets the output after the IFE is finalized, and Alice receives the liquid funds from the Quasar contract after the waiting period</li>
+</ol>
+<p>Note that if Alice <em>does</em> double spend the input</p>
+<ol>
+<li>The double spend transaction is used to challenge the IFE and is determined to be non-canonical</li>
+<li>The same transaction is used by the Quasar Owner to invalidate Alice’s IFE-claim on the Quasar contract</li>
+<li>The Quasar owner is safe, but Alice may lose her funds.</li>
+</ol>
+<h2 id="Possible-Incentives-for-the-Owner"><a href="#Possible-Incentives-for-the-Owner" class="headerlink" title="Possible Incentives for the Owner"></a>Possible Incentives for the Owner</h2><h3 id="Fees-for-normal-fast-exits"><a href="#Fees-for-normal-fast-exits" class="headerlink" title="Fees for normal fast exits"></a>Fees for normal fast exits</h3><p>The fee should take into account:</p>
+<ol>
+<li><p>The cost of challenging in case the <a href="#Operator-allows-a-double-spend-transaction-of-Alice">Operator allows a double-spend transaction of Alice</a></p>
+</li>
+<li><p>The fee for providing the service - since the waiting period of every Quasar is customizable, the fee can be dependent on the waiting period, opening multiple options of usability. The fee can also alternatively be a cut from the amount.</p>
+</li>
+</ol>
+<p>Another thing to note here, is since Alice doesn’t actually exit any funds from the child chain, she doesn’t have to pay for the cost of processing an exit (the bounty). Also the Quasar Owner has the option to merge multiple UTXOs on the child chain before exiting, which reduces gas. Altogether, less gas is spent on processing exits. Hence the Quasar Owner doesn’t need to include the cost of exiting the output in the fee.<br>The design of the fees should take this fact into consideration since, Alice would normally have to pay the bounty for a Standard Exit, but as an alternative here, she has to pay only a fee to the Quasar, which could ideally be of similar size.</p>
+<h3 id="Fees-for-IFE-Claim"><a href="#Fees-for-IFE-Claim" class="headerlink" title="Fees for IFE-Claim"></a>Fees for IFE-Claim</h3><p>The IFE-Claim’s should be disincentivized by having a higher fee and should only be used when necessary. The IFE-Claim process requires the Owner to Piggyback. This cost should be borne by Alice and can be included with the fee to the Quasar.</p>
+<p>The IFE-Claim is already disincentivized to some extent by having a higher waiting period than a normal IFE. So the fee for an IFE-Claim could simply include </p>
+<ol>
+<li>Fee of normal fast exit</li>
+<li>Cost of piggybacking the ouptut</li>
+<li>Cost of potentially challenging the IFE-Claim</li>
+</ol>
+<h2 id="Potential-Attacks-and-their-Mitigations"><a href="#Potential-Attacks-and-their-Mitigations" class="headerlink" title="Potential Attacks and their Mitigations"></a>Potential Attacks and their Mitigations</h2><h3 id="Attacks-by-Alice"><a href="#Attacks-by-Alice" class="headerlink" title="Attacks by Alice"></a>Attacks by Alice</h3><h4 id="DoS-tickets"><a href="#DoS-tickets" class="headerlink" title="DoS tickets"></a>DoS tickets</h4><p>Obtaining a ticket from a Quasar blocks the amount from the Quasar’s real limit. So obtaining several tickets without actually using them will block the capacity of the Quasar.<br>The solution is to have a bond, which can be taken for providing the ticket, and can be returned on claiming the tickets. This can be looked as to be similar to the exit bond. There can be other approaches too, where the service fee is taken while obtaining tickets.</p>
+<h4 id="Ticket-for-a-fake-UTXO"><a href="#Ticket-for-a-fake-UTXO" class="headerlink" title="Ticket for a fake UTXO"></a>Ticket for a fake UTXO</h4><p>A ticket can be obtained for a fake UTXO, but while claiming funds the inclusion proof of the transaction between Alice and Owner is required.</p>
+<h4 id="Alice-attempts-to-exit-from-the-UTXO-after-submitting-the-claim"><a href="#Alice-attempts-to-exit-from-the-UTXO-after-submitting-the-claim" class="headerlink" title="Alice attempts to exit from the UTXO after submitting the claim"></a>Alice attempts to exit from the UTXO after submitting the claim</h4><p>Alice needs the inclusion proof in order to claim liquid funds. So assuming the transaction to the Quasar owner was confirmed, if Alice tries to exit it will be challenged with that same inclusion proof.</p>
+<p>If Alice starts an IFE-Claim, the same double spending transaction can be used to challenge both the IFE and the claim.</p>
+<h4 id="Alice-uses-the-inclusion-proofs-of-same-UTXO-twice"><a href="#Alice-uses-the-inclusion-proofs-of-same-UTXO-twice" class="headerlink" title="Alice uses the inclusion proofs of same UTXO twice"></a>Alice uses the inclusion proofs of same UTXO twice</h4><p>Alice can get the ticket for any given UTXO, so it is possible for Alice to try claiming funds twice with the same inclusion proof.<br>The solution is to have a utxo map maintained by the Quasar which can eradicate this. Also in the case of Alice trying to use a different Quasar with an older proof will not succeed since the recipient of the UTXO will not be the Quasar owner.</p>
+<h3 id="Attacks-by-the-Quasar-owner"><a href="#Attacks-by-the-Quasar-owner" class="headerlink" title="Attacks by the Quasar owner"></a>Attacks by the Quasar owner</h3><h4 id="Owner-races-to-empty-liquid-funds"><a href="#Owner-races-to-empty-liquid-funds" class="headerlink" title="Owner races to empty liquid funds"></a>Owner races to empty liquid funds</h4><p>For situations where The Owner immediately generates a ticket and tries to empty the liquidity funds before Alice claims, the owner still cannot generate a ticket with a value higher than the real(updated) capacity.</p>
+<h4 id="Owner-retracts-liquid-funds-from-contract"><a href="#Owner-retracts-liquid-funds-from-contract" class="headerlink" title="Owner retracts liquid funds from contract"></a>Owner retracts liquid funds from contract</h4><p>The Owner cannot try to take away liquid funds and empty the contract between the time Alice takes to claim after transferring. Since the ticket reserves funds for Alice, Alice can safely extract funds as long as the ticket is still valid.</p>
+<h3 id="Attacks-by-the-Operator"><a href="#Attacks-by-the-Operator" class="headerlink" title="Attacks by the Operator"></a>Attacks by the Operator</h3><h4 id="Operator-publishes-invalid-block"><a href="#Operator-publishes-invalid-block" class="headerlink" title="Operator publishes invalid block"></a>Operator publishes invalid block</h4><p>If Alice’s transaction to the Owner is included <em>before</em> the invalid transaction, the Owner can standard exit to get the funds</p>
+<p>IF Alice’s transaction to the Owner is included <em>after</em> the invalid transaction, the Owner can in-flight exit to get the funds</p>
+<h4 id="After-Operator-goes-Byzantine"><a href="#After-Operator-goes-Byzantine" class="headerlink" title="After Operator goes Byzantine"></a>After Operator goes Byzantine</h4><p>If the operator goes Byzantine but still submits blocks, the users can continue to make successive transaction and get proofs for them. This however, will not allow them to use the Quasars. For the older UTXOs (within the limit of the blocknum upper bound specified by the owner) that are transferred, the Owners could still exit, but for successive transfers after the operator goes byzantine, tickets will not be obtainable as it would be a UTXO from a blocknum that was after the safe upper-bound</p>
+<h4 id="Operator-doesn’t-include-Alice’s-transaction-to-Owner"><a href="#Operator-doesn’t-include-Alice’s-transaction-to-Owner" class="headerlink" title="Operator doesn’t include Alice’s transaction to Owner"></a>Operator doesn’t include Alice’s transaction to Owner</h4><p>If the operator withholds the transaction, Alice can start an IFE-Claim to recover her funds</p>
+<h4 id="Operator-allows-a-double-spend-transaction-of-Alice"><a href="#Operator-allows-a-double-spend-transaction-of-Alice" class="headerlink" title="Operator allows a double-spend transaction of Alice"></a>Operator allows a double-spend transaction of Alice</h4><p>This is the only rare chance which brings in the usage of the waiting period.</p>
+<p>Alice spends UTXO1 in TX1 to Malorie, and then Alice colludes with the Operator to include a transaction TX2, this time to the Quasar Owner spending the UTXO1 again. Though the Owner cannot exit this, the contract would still allow Alice to claim liquid funds through UTXO1 (given UTXO1 was within the safe blocknum-upper bound)</p>
+<p>The waiting period set for the Quasar protects against this. The Owner should validate their queue, and challenge Alice’s claim by revealing an older spend of UTXO1 within the waiting period. Since, this is rare, happening only when the Operator colludes with Alice, if someone trusts the Operator, or the Operator himself could run a Quasar without the need for validation, with a zero waiting period.</p>
+<h2 id="Alternative-Modifications-to-the-approach"><a href="#Alternative-Modifications-to-the-approach" class="headerlink" title="Alternative Modifications to the approach"></a>Alternative Modifications to the approach</h2><h3 id="Single-Liquidity-Pool"><a href="#Single-Liquidity-Pool" class="headerlink" title="Single Liquidity Pool"></a>Single Liquidity Pool</h3><p>An alternative is to have a single liquidity pool instead of having seperate contracts with their own liquidity.</p>
+<ul>
+<li>fee can be distributed among liquidity providers</li>
+<li>removes the requirement of running separate contracts for each liqudiity provider</li>
+<li>however, this could potentially prevent from keeping the waiting period low. Since every swap is from the same pool, Liquidity provider’s are no more accountable for the safety of thier liquid funds.</li>
+<li>can be an option when you want to delegate the task of challenging to a small set of other trusted user(s)</li>
+</ul>
+<h3 id="Automating-maintainance-of-the-Safe-Blocknum-upper-bound"><a href="#Automating-maintainance-of-the-Safe-Blocknum-upper-bound" class="headerlink" title="Automating maintainance of the Safe Blocknum upper-bound"></a>Automating maintainance of the Safe Blocknum upper-bound</h3><p>In the current design, there is a requirement for the Quasar owner to constantly keep updating the Safe Blocknum upper-bound.<br>An alternative could be -<br>Provide tickets for a UTXO if either one of these satisfy:</p>
+<ul>
+<li>UTXOs is older than (Latest_Block_timestamp - Buffer), ideally the buffer could take the value of the minimum validation period.<br> or</li>
+<li>UTXO is from a safe block (determined by safe blocknum upper-bound) set by the Owner</li>
+</ul>
+<h3 id="Output-funds-in-different-form"><a href="#Output-funds-in-different-form" class="headerlink" title="Output funds in different form"></a>Output funds in different form</h3><p>Since the fast withdrawal way is essentially a swap of assets between users on different layers. The swap can be extended to provide fund outputs in any form. Instead of providing with Liquid funds, a deposit transaction to another Layer 2 could be created (enforcing a swap instead of an exit).</p>
+
+  </div>
+</article>
+<br><br>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overview"><span class="toc-number">1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process-in-Detail"><span class="toc-number">2.</span> <span class="toc-text">The Process in Detail</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setting-Up"><span class="toc-number">2.1.</span> <span class="toc-text">Setting Up</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-and-Withdrawing"><span class="toc-number">2.2.</span> <span class="toc-text">Using and Withdrawing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maintainance"><span class="toc-number">2.3.</span> <span class="toc-text">Maintainance</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Mandatory-Actions"><span class="toc-number">2.3.1.</span> <span class="toc-text">Mandatory Actions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Byzantine-State"><span class="toc-number">3.</span> <span class="toc-text">Byzantine State</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Freeze-during-Byzantine-State"><span class="toc-number">3.1.</span> <span class="toc-text">Freeze during Byzantine State</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IFE-Claims"><span class="toc-number">3.2.</span> <span class="toc-text">IFE-Claims</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Possible-Incentives-for-the-Owner"><span class="toc-number">4.</span> <span class="toc-text">Possible Incentives for the Owner</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fees-for-normal-fast-exits"><span class="toc-number">4.1.</span> <span class="toc-text">Fees for normal fast exits</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fees-for-IFE-Claim"><span class="toc-number">4.2.</span> <span class="toc-text">Fees for IFE-Claim</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Potential-Attacks-and-their-Mitigations"><span class="toc-number">5.</span> <span class="toc-text">Potential Attacks and their Mitigations</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Attacks-by-Alice"><span class="toc-number">5.1.</span> <span class="toc-text">Attacks by Alice</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DoS-tickets"><span class="toc-number">5.1.1.</span> <span class="toc-text">DoS tickets</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ticket-for-a-fake-UTXO"><span class="toc-number">5.1.2.</span> <span class="toc-text">Ticket for a fake UTXO</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Alice-attempts-to-exit-from-the-UTXO-after-submitting-the-claim"><span class="toc-number">5.1.3.</span> <span class="toc-text">Alice attempts to exit from the UTXO after submitting the claim</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Alice-uses-the-inclusion-proofs-of-same-UTXO-twice"><span class="toc-number">5.1.4.</span> <span class="toc-text">Alice uses the inclusion proofs of same UTXO twice</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attacks-by-the-Quasar-owner"><span class="toc-number">5.2.</span> <span class="toc-text">Attacks by the Quasar owner</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Owner-races-to-empty-liquid-funds"><span class="toc-number">5.2.1.</span> <span class="toc-text">Owner races to empty liquid funds</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Owner-retracts-liquid-funds-from-contract"><span class="toc-number">5.2.2.</span> <span class="toc-text">Owner retracts liquid funds from contract</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attacks-by-the-Operator"><span class="toc-number">5.3.</span> <span class="toc-text">Attacks by the Operator</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-publishes-invalid-block"><span class="toc-number">5.3.1.</span> <span class="toc-text">Operator publishes invalid block</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#After-Operator-goes-Byzantine"><span class="toc-number">5.3.2.</span> <span class="toc-text">After Operator goes Byzantine</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-doesn%E2%80%99t-include-Alice%E2%80%99s-transaction-to-Owner"><span class="toc-number">5.3.3.</span> <span class="toc-text">Operator doesn’t include Alice’s transaction to Owner</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Operator-allows-a-double-spend-transaction-of-Alice"><span class="toc-number">5.3.4.</span> <span class="toc-text">Operator allows a double-spend transaction of Alice</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Alternative-Modifications-to-the-approach"><span class="toc-number">6.</span> <span class="toc-text">Alternative Modifications to the approach</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Single-Liquidity-Pool"><span class="toc-number">6.1.</span> <span class="toc-text">Single Liquidity Pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Automating-maintainance-of-the-Safe-Blocknum-upper-bound"><span class="toc-number">6.2.</span> <span class="toc-text">Automating maintainance of the Safe Blocknum upper-bound</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Output-funds-in-different-form"><span class="toc-number">6.3.</span> <span class="toc-text">Output funds in different form</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://souradeep-das.github.io/2020/11/03/quasar/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://souradeep-das.github.io/2020/11/03/quasar/&text=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://souradeep-das.github.io/2020/11/03/quasar/&is_video=false&description=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma&body=Check out this article: https://souradeep-das.github.io/2020/11/03/quasar/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://souradeep-das.github.io/2020/11/03/quasar/&title=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://souradeep-das.github.io/2020/11/03/quasar/&name=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://souradeep-das.github.io/2020/11/03/quasar/&t=Quasar Fast Withdrawals: Instant Trustless Exits on Plasma"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2019-2023
+    Souradeep Das
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
