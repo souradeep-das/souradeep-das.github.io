@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://souradeep-das.github.io/images/struct.png">
 <meta property="og:image" content="https://souradeep-das.github.io/images/aa_metal.png">
 <meta property="article:published_time" content="2022-09-28T15:06:12.000Z">
-<meta property="article:modified_time" content="2023-06-30T06:18:58.000Z">
+<meta property="article:modified_time" content="2023-09-13T15:10:21.176Z">
 <meta property="article:author" content="Souradeep Das">
 <meta property="article:tag" content="Research">
 <meta property="article:tag" content="EVM">
@@ -90,6 +90,8 @@
        --><li><a href="/about/">About</a></li><!--
      --><!--
        --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/decks/">Decks</a></li><!--
      --><!--
        --><li><a href="/search/">Search</a></li><!--
      -->
@@ -221,7 +223,7 @@
   <div class="content e-content" itemprop="articleBody">
     <p>As developers working with Ethereum, we all know that the Ethereum Layer1 (L1) isn’t very scalable, and that’s what Layer 2 (L2) projects like Boba, Optimism, zkSync etc are committed to address and resolve in their own way.</p>
 <p>Of course, there are several approaches to scaling - on-chain approaches like Sharding parallelizes execution by splitting the network into multiple shards. And the L2 approach takes transaction execution off-chain, using the L1 as a settlement layer through rollups or other techniques.</p>
-<h5 id="But-here’s-the-thing-about-scaling-Over-time-there’s-always-more-demand-for-scale-than-any-one-solution-to-the-problem-can-provide-Such-is-the-tyranny-of-distributed-systems"><a href="#But-here’s-the-thing-about-scaling-Over-time-there’s-always-more-demand-for-scale-than-any-one-solution-to-the-problem-can-provide-Such-is-the-tyranny-of-distributed-systems" class="headerlink" title="But here’s the thing about scaling. Over time, there’s always more demand for scale than any one solution to the problem can provide. Such is the tyranny of distributed systems!"></a>But here’s the thing about scaling. Over time, there’s always more demand for scale than any one solution to the problem can provide. Such is the tyranny of distributed systems!</h5><p>That means a L2’s job is never done, or in general any solution for scalability is not truly complete. As is the case, the community is always looking for better ways to increase throughput and reduce latency to meet the ever-increasing demand of projects spanning the internet that need transaction finality across many organizations without sacrificing performance or reliability.</p>
+<h5 id="But-here’s-the-thing-about-scaling-Over-time-there’s-always-more-demand-for-scale-than-any-one-solution-to-the-problem-can-provide-Such-is-the-tyranny-of-distributed-systems"><a href="#But-here’s-the-thing-about-scaling-Over-time-there’s-always-more-demand-for-scale-than-any-one-solution-to-the-problem-can-provide-Such-is-the-tyranny-of-distributed-systems" class="headerlink" title="But here’s the thing about scaling. Over time, there’s always more demand for scale than any one solution to the problem can provide. Such is the tyranny of distributed systems!"></a>But here’s the thing about scaling. Over time, there’s always more demand for scale than any one solution to the problem can provide. Such is the tyranny of distributed systems!</h5><p>That means an L2’s job is never done, or in general any solution for scalability is not truly complete. As is the case, the community is always looking for better ways to increase throughput and reduce latency to meet the ever-increasing demand of projects spanning the internet that need transaction finality across many organizations without sacrificing performance or reliability.</p>
 <p>In this article we are going to get into some approaches that could push the boundaries of scalability even further, including some new methods that can be considered - specifically addressed around a single bottleneck. We will also try and weigh the pros and cons of each, to identify the most promising path forward.</p>
 <h2 id="Breaking-the-Bottlenecks"><a href="#Breaking-the-Bottlenecks" class="headerlink" title="Breaking the Bottlenecks"></a>Breaking the Bottlenecks</h2><p>Scaling one part of a system without scaling the bottlenecks around it doesn’t get you far. While some of the more prominent reasons that limit scalability are consensus and propagation of messages (in turn the block size and time), the Ethereum Virtual Machine (EVM) is itself, in its core, a crucial limiter of scale. And, since several L2s would still want to utilize and maintain EVM compatibility&#x2F;equivalence to replicate L1 user experience - they also inherently need to, and are more suitable for finding ways to get around this bottleneck.<br>So the natural question is - what exactly is this bottleneck and how do we get around this?</p>
 <h2 id="Amping-Up-the-EVM"><a href="#Amping-Up-the-EVM" class="headerlink" title="Amping Up the EVM"></a>Amping Up the EVM</h2><p>Y(S, T)&#x3D; S&#39;</p>
@@ -381,7 +383,7 @@
 <li><p>The relayer&#x2F;provider then wraps the user tx along with the relevant<br>access list for the transaction and calls the User Account. The<br>User Account can then validate the transaction, signatures and<br>send it forward for execution.<br><br><img src="/images/aa_metal.png"></p>
 </li>
 </ul>
-<p>Account abstraction is easier to implement for a L2 than the base Layer, and several L2s would move on to account abstraction at some point. If this can be utilized to enable third party providers&#x2F;relayers to provide ‘stricter’ access lists, a new market of providers could form. This probably can also be combined with ideas from ‘method access boundaries’, where projects could run their own relayers&#x2F;providers that could do the job of providing access lists for transactions to their contracts in the most efficient way.</p>
+<p>Account abstraction is easier to implement for an L2 than the base Layer, and several L2s would move on to account abstraction at some point. If this can be utilized to enable third party providers&#x2F;relayers to provide ‘stricter’ access lists, a new market of providers could form. This probably can also be combined with ideas from ‘method access boundaries’, where projects could run their own relayers&#x2F;providers that could do the job of providing access lists for transactions to their contracts in the most efficient way.</p>
 <p>While the Quest for Scalability is never ending, there is a clock thats ticking and will soon reveal a limit to how much networks can be scaled. Considering the current standards, that limit would not be very high. Some techniques such as these, or a combination of several, could in time, be the fuel that keeps the quest for Scalability running, and reset the clock, to delay the worry indefinitely for some time again in the future</p>
 <h2 id="So-long-and-thanks-for-all-the-fish"><a href="#So-long-and-thanks-for-all-the-fish" class="headerlink" title="So long and thanks for all the fish"></a>So long and thanks for all the fish</h2><p>But this isn’t the end of exploring the potential of the topic, the intention is to start a conversation</p>
 <ul>
@@ -414,6 +416,8 @@
           <li><a href="/about/">About</a></li>
         
           <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/decks/">Decks</a></li>
         
           <li><a href="/search/">Search</a></li>
         
@@ -474,6 +478,8 @@
        --><li><a href="/about/">About</a></li><!--
      --><!--
        --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/decks/">Decks</a></li><!--
      --><!--
        --><li><a href="/search/">Search</a></li><!--
      -->

@@ -14,7 +14,7 @@
 <meta property="og:description" content="With regards to enhancing the experience of using Plasma, entry and exit are two things that often come up to be a barrier for usability. Ideally, both entry and exit should be time and cost effective">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-13T11:54:00.000Z">
-<meta property="article:modified_time" content="2023-08-10T09:20:21.473Z">
+<meta property="article:modified_time" content="2023-09-13T15:10:30.198Z">
 <meta property="article:author" content="Souradeep Das">
 <meta property="article:tag" content="Layer 2">
 <meta property="article:tag" content="Plasma">
@@ -86,6 +86,8 @@
      --><!--
        --><li><a href="/archives/">Writing</a></li><!--
      --><!--
+       --><li><a href="/decks/">Decks</a></li><!--
+     --><!--
        --><li><a href="/search/">Search</a></li><!--
      -->
       </ul>
@@ -127,7 +129,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Direct-exits-to-a-L2-Optimsim"><span class="toc-number">1.</span> <span class="toc-text">Section - Direct exits to a L2 (Optimsim)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process"><span class="toc-number">2.</span> <span class="toc-text">The Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Vectors"><span class="toc-number">2.1.</span> <span class="toc-text">Additional Vectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claim-methods"><span class="toc-number">2.2.</span> <span class="toc-text">Claim methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Potential-optimizations"><span class="toc-number">2.3.</span> <span class="toc-text">Potential optimizations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Exits-via-hopping-through-Ethereum"><span class="toc-number">3.</span> <span class="toc-text">Section - Exits via hopping through Ethereum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Process-1"><span class="toc-number">3.1.</span> <span class="toc-text">The Process</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Direct-exits-to-an-L2-Optimsim"><span class="toc-number">1.</span> <span class="toc-text">Section - Direct exits to an L2 (Optimsim)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process"><span class="toc-number">2.</span> <span class="toc-text">The Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Vectors"><span class="toc-number">2.1.</span> <span class="toc-text">Additional Vectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claim-methods"><span class="toc-number">2.2.</span> <span class="toc-text">Claim methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Potential-optimizations"><span class="toc-number">2.3.</span> <span class="toc-text">Potential optimizations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Exits-via-hopping-through-Ethereum"><span class="toc-number">3.</span> <span class="toc-text">Section - Exits via hopping through Ethereum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Process-1"><span class="toc-number">3.1.</span> <span class="toc-text">The Process</span></a></li></ol></li></ol>
       </div>
     
   </span>
@@ -212,7 +214,7 @@
 
   <div class="content e-content" itemprop="articleBody">
     <p>With regards to enhancing the experience of using Plasma, entry and exit are two things that often come up to be a barrier for usability. Ideally, both entry and exit should be time and cost effective.<br>While, entries (deposits) are fast, but not as cheap (which probably is a topic for later), exits are neither.<br>The <a href="/2020/11/03/quasar/" title="Quasar Fast Withdrawals: Instant Trustless Exits on Plasma">Quasar</a> attempts to solve this by allowing fast exits off Plasma, which still isn’t very cheap because of the Ethereum transactions and the gas costs associated with them.</p>
-<h2 id="Section-Direct-exits-to-a-L2-Optimsim"><a href="#Section-Direct-exits-to-a-L2-Optimsim" class="headerlink" title="Section - Direct exits to a L2 (Optimsim)"></a>Section - Direct exits to a L2 (Optimsim)</h2><p>This is an attempt to enforce a way where the Quasar could allow Fast Exits onto a different L2, potentially without touching Ethereum, and removing the gas costs hence, from the equation.</p>
+<h2 id="Section-Direct-exits-to-an-L2-Optimsim"><a href="#Section-Direct-exits-to-an-L2-Optimsim" class="headerlink" title="Section - Direct exits to an L2 (Optimsim)"></a>Section - Direct exits to an L2 (Optimsim)</h2><p>This is an attempt to enforce a way where the Quasar could allow Fast Exits onto a different L2, potentially without touching Ethereum, and removing the gas costs hence, from the equation.</p>
 <h2 id="The-Process"><a href="#The-Process" class="headerlink" title="The Process"></a>The Process</h2><p>To do this, out of sheer exuberance and fascination for the Hubble spotting a Double Quasar recently, we try and split our Quasar into two as well!</p>
 <ol>
 <li>L2Quasar - rests on Optimism - the main contract, that someone interacts with, holds the storage and the quasar pool</li>
@@ -258,7 +260,7 @@
 <li>The automatic safe blocknum logic does not work here, since the L2Quasar doesn’t have access to the Plasma blocks.<br>We might have to consider the manual safe blocknum update by the maintainer, or a time based update. a positive point, is the regular safe blocknum updates are not tx on ethereum (saving some cost).</li>
 <li>Someone who wants to fast exit must have eth on optimism to pay for calling the obtainTicket method.<br>Since, the obtainTicket can be called by any one (not limiting to someone owning the UTXO), there could exist relayers who could call obtain tickets on behalf</li>
 </ul>
-<h2 id="Section-Exits-via-hopping-through-Ethereum"><a href="#Section-Exits-via-hopping-through-Ethereum" class="headerlink" title="Section - Exits via hopping through Ethereum"></a>Section - Exits via hopping through Ethereum</h2><p>L2s on Ethereum function by depositing assets on L1 which provides the equivalent assets on L2 (a deposit).<br>The idea is to use the deposit method with a quasar to provide choice of endpoints to receive thier liquid funds. Instead of giving the funds over Eth, the quasar  would call the deposits to these other L2s on claiming.<br>This specifically can be a way to Fast Exit on a L2 which doesn’t have a L1 -&gt; L2 bridge. (for eg. xDAI, Loopring)<br>Which, however requires Ethereum Transactions and hence gas fees, only saving one transaction if you are willing to switch L2s.</p>
+<h2 id="Section-Exits-via-hopping-through-Ethereum"><a href="#Section-Exits-via-hopping-through-Ethereum" class="headerlink" title="Section - Exits via hopping through Ethereum"></a>Section - Exits via hopping through Ethereum</h2><p>L2s on Ethereum function by depositing assets on L1 which provides the equivalent assets on L2 (a deposit).<br>The idea is to use the deposit method with a quasar to provide choice of endpoints to receive thier liquid funds. Instead of giving the funds over Eth, the quasar  would call the deposits to these other L2s on claiming.<br>This specifically can be a way to Fast Exit on an L2 which doesn’t have a L1 -&gt; L2 bridge. (for eg. xDAI, Loopring)<br>Which, however requires Ethereum Transactions and hence gas fees, only saving one transaction if you are willing to switch L2s.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">changing,</span><br><span class="line">Process Exit on Plasma -&gt; funds on Eth -&gt; Deposit on other L2</span><br><span class="line"></span><br><span class="line">into</span><br><span class="line">Claim/Process Fast Exit -&gt; Deposit on other L2</span><br></pre></td></tr></table></figure>
 
 <h3 id="The-Process-1"><a href="#The-Process-1" class="headerlink" title="The Process"></a>The Process</h3><ul>
@@ -287,6 +289,8 @@
         
           <li><a href="/archives/">Writing</a></li>
         
+          <li><a href="/decks/">Decks</a></li>
+        
           <li><a href="/search/">Search</a></li>
         
       </ul>
@@ -295,7 +299,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Direct-exits-to-a-L2-Optimsim"><span class="toc-number">1.</span> <span class="toc-text">Section - Direct exits to a L2 (Optimsim)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process"><span class="toc-number">2.</span> <span class="toc-text">The Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Vectors"><span class="toc-number">2.1.</span> <span class="toc-text">Additional Vectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claim-methods"><span class="toc-number">2.2.</span> <span class="toc-text">Claim methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Potential-optimizations"><span class="toc-number">2.3.</span> <span class="toc-text">Potential optimizations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Exits-via-hopping-through-Ethereum"><span class="toc-number">3.</span> <span class="toc-text">Section - Exits via hopping through Ethereum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Process-1"><span class="toc-number">3.1.</span> <span class="toc-text">The Process</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Direct-exits-to-an-L2-Optimsim"><span class="toc-number">1.</span> <span class="toc-text">Section - Direct exits to an L2 (Optimsim)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Process"><span class="toc-number">2.</span> <span class="toc-text">The Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Additional-Vectors"><span class="toc-number">2.1.</span> <span class="toc-text">Additional Vectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claim-methods"><span class="toc-number">2.2.</span> <span class="toc-text">Claim methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Potential-optimizations"><span class="toc-number">2.3.</span> <span class="toc-text">Potential optimizations</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Section-Exits-via-hopping-through-Ethereum"><span class="toc-number">3.</span> <span class="toc-text">Section - Exits via hopping through Ethereum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Process-1"><span class="toc-number">3.1.</span> <span class="toc-text">The Process</span></a></li></ol></li></ol>
       </div>
     
 
@@ -346,6 +350,8 @@
        --><li><a href="/about/">About</a></li><!--
      --><!--
        --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/decks/">Decks</a></li><!--
      --><!--
        --><li><a href="/search/">Search</a></li><!--
      -->
